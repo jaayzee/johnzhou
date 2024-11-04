@@ -5,13 +5,25 @@ const Scene = dynamic(() => import('@/components/Scene/index'), {
     ssr: false,
 })
 
+const ParallaxWrapper = dynamic(() => import('@/components/Parallax/ParallaxWrapper'), {
+  ssr: false,
+});
+
+const ParallaxSection = dynamic(() => import('@/components/Parallax/ParallaxSection'), {
+  ssr: false
+});
+
+const SpaceScene = dynamic(() => import('@/components/SpaceScene/index'), {
+  ssr: false,
+})
+
 export default function Home() {
   return (
     <>
         <main className="relative">
-          <div className="h-screen w-full">
+          <ParallaxWrapper>
             <Scene />
-          </div>
+          </ParallaxWrapper>
           <section className="absolute top-[100vh] w-full bg-background">
             <Marquee 
               autoFill={true}
@@ -21,7 +33,7 @@ export default function Home() {
                 ✦ SAMPLE&nbsp;
               </span>
             </Marquee>
-            <div className="container mx-auto px-4 py-16 text-primary">
+            <div className="container mx-auto px-4 py-16 text-primary h-screen">
               <h2 className="text-4xl font-bold mb-6">
                 ABOUT ME ABOUT ME ABOUT ME
               </h2>
@@ -46,6 +58,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            <ParallaxSection scene={<SpaceScene />}>
+              <p className='w-[50vw] text-[2vw] self-end uppercase mix-blend-difference'>Beauty and quality need the right time to be conceived and realised even in a world that is in too much of a hurry.</p>
+              <p className='text-[5vw] uppercase mix-blend-difference'>Background Parallax</p>
+            </ParallaxSection>
+            <div className='h-screen'></div>
           </section>
         </main>
     </>
