@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
@@ -19,12 +19,12 @@ const Navbar = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="bg-black/50 backdrop-blur-sm fixed w-full z-50">
-      <div className="max-w-6xl mx-auto px-4">
+    <nav className="bg-background/50 backdrop-blur-sm fixed w-full z-50">
+      <div className="mx-auto px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-white">JOHN ZHOU</Link>
+            <Link href="/" className="text-xl font-bold text-foreground">JOHN ZHOU</Link>
           </div>
 
           {/* Desktop Menu */}
@@ -35,8 +35,8 @@ const Navbar = () => {
                 href={item.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive(item.href)
-                    ? 'text-white bg-gray-800'
-                    : 'text-gray-300 hover:text-white'
+                    ? 'text-background bg-foreground'
+                    : 'text-foreground/50 hover:text-accent'
                 }`}
               >
                 {item.label}

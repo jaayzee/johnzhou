@@ -1,33 +1,83 @@
-import React, { useRef } from 'react'
+'use client';
+
+import React, { useRef, useState, useEffect } from 'react';
 import { PresentationControls, MeshTransmissionMaterial, useGLTF, Text } from "@react-three/drei";
-import { useFrame, useThree } from '@react-three/fiber'
-import { Mesh } from 'three'
+import { useFrame, useThree } from '@react-three/fiber';
+import { Mesh, Color } from 'three';
 import { useControls } from 'leva';
 
 export default function Model() {
     const { nodes } = useGLTF("/medias/star.glb");
-    const { viewport } = useThree()
+    const { viewport } = useThree();
     const star = useRef<Mesh>(null);
+    
+    const [bgColor, setBgColor] = useState(new Color(getComputedStyle(document.documentElement).getPropertyValue('--background')));
+    const [textColor, setTextColor] = useState(new Color(getComputedStyle(document.documentElement).getPropertyValue('--foreground')));
 
+    useEffect(() => {
+        // three.js can't take css elements, must have exact color codes
+        const updateColors = () => {
+            const newBgColor = new Color(getComputedStyle(document.documentElement).getPropertyValue('--background'));
+            const newTextColor = new Color(getComputedStyle(document.documentElement).getPropertyValue('--foreground'));
+            setBgColor(newBgColor);
+            setTextColor(newTextColor);
+        };
+
+        // run initially
+        updateColors();
+
+        // watch for theme changes
+        const observer = new MutationObserver(updateColors);
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        // watch for visibility changes
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                updateColors();
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            observer.disconnect();
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
+
+    // mesh transmission controls
     const materialProps = useControls({
-        thickness: { value: 0.3, min: 0, max: 3, step: 0.05 },
+        thickness: { value: 0.15, min: 0, max: 3, step: 0.05 },
         roughness: { value: 0.3, min: 0, max: 1, step: 0.1 },
         transmission: {value: 1, min: 0, max: 1, step: 0.1},
         ior: { value: 1.2, min: 0, max: 3, step: 0.1 },
         chromaticAberration: { value: 0.10, min: 0, max: 1},
-        backside: { value: true},
+        backside: { value: true },
     })
     
-    useFrame( () => {
+    // mesh auto-rotation
+    useFrame(({ clock }) => {
         if (star.current) {
-            star.current.rotation.y += 0.005
-            star.current.rotation.z += 0.005
+            star.current.rotation.y += 0.005;
+            star.current.rotation.z += 0.005;
         }
     })
 
     return (
-        <group scale={viewport.width / 3.75} >
-            <Text font={'/fonts/PPNeueMontreal-Bold.otf'} position={[0, 0, -1]} fontSize={0.5} color="white" anchorX="center" anchorY="middle">
+        <group>
+            <Text 
+                font={'/fonts/PPNeueMontreal-Bold.otf'}
+                position={[0, 0, -1]}
+                fontSize={0.5}
+                color={textColor}
+                anchorX="center"
+                anchorY="middle"
+                scale={viewport.width / 4.5}
+            >
                 ✦ JOHN ✦ ZHOU ✦
             </Text>
             <PresentationControls
@@ -40,8 +90,15 @@ export default function Model() {
                 config={{ mass: 5, tension: 1000 }}
                 snap={true}
             >
-                <mesh ref={star} {...nodes.star}>
-                    <MeshTransmissionMaterial {...materialProps}/>
+                <mesh 
+                    ref={star} 
+                    {...nodes.star}
+                    scale={viewport.width / 5}
+                >
+                    <MeshTransmissionMaterial 
+                        {...materialProps}
+                        background={bgColor}
+                    />
                 </mesh>
             </PresentationControls>
         </group>
