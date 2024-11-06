@@ -60,7 +60,7 @@ export default function Model() {
     })
     
     // mesh auto-rotation
-    useFrame(({ clock }) => {
+    useFrame(({}) => {
         if (star.current) {
             star.current.rotation.y += 0.005;
             star.current.rotation.z += 0.005;

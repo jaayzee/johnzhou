@@ -19,7 +19,7 @@ const Navbar = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="bg-background/50 backdrop-blur-sm fixed w-full z-50">
+    <nav className="bg-background/80 backdrop-blur-sm fixed w-full z-50">
       <div className="mx-auto px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -36,7 +36,7 @@ const Navbar = () => {
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive(item.href)
                     ? 'text-background bg-foreground'
-                    : 'text-foreground/50 hover:text-accent'
+                    : 'text-foreground hover:text-destructive'
                 }`}
               >
                 {item.label}
@@ -48,7 +48,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-white focus:outline-none"
+              className="text-foreground hover:text-white focus:outline-none"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -58,15 +58,15 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-2 pt-2 pb-3 h-screen space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'text-white bg-gray-800'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                      ? 'text-background bg-foreground'
+                      : 'text-foreground hover:text-background hover:bg-destructive'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >

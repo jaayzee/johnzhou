@@ -11,7 +11,7 @@ type ParallaxWrapperProps = {
 export default function ParallaxWrapper({ children }: ParallaxWrapperProps) {
   const container = useRef<HTMLDivElement>(null);
   
-  // Initialize smooth scrolling
+  // smooth scrolling
   useEffect(() => {
     const lenis = new Lenis();
 
@@ -27,7 +27,7 @@ export default function ParallaxWrapper({ children }: ParallaxWrapperProps) {
     };
   }, []);
 
-  // Setup parallax effect
+  // parallax effect
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ['start start', 'end start']

@@ -27,6 +27,9 @@
     
     --destructive: #ef4444;
     --destructive-foreground: #ffffff;
+
+    --dim: #5c5c5c;
+    --dim-foreground: #ffffff;
     
     --border: #e5e5e5;
     --input: #e5e5e5;
@@ -55,8 +58,11 @@
     --accent: #262626;
     --accent-foreground: #ededed;
     
-    --destructive: #7f1d1d;
+    --destructive: #449aef;
     --destructive-foreground: #ededed;
+
+    --dim: #919191;
+    --dim-foreground: #ffffff;
     
     --border: #262626;
     --input: #262626;

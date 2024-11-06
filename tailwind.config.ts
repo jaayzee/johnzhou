@@ -42,6 +42,10 @@ const config: Config = {
           DEFAULT: 'var(--card)',
           foreground: 'var(--card-foreground)',
         },
+        dim: {
+          DEFAULT: 'var(--dim)',
+          foreground: 'var(--dim-foreground)',
+        }
       },
     },
   },
