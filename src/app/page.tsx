@@ -20,6 +20,9 @@ const SpaceScene = dynamic(() => import('@/components/SpaceScene/index'), {
 const date = new Date()
 const time = date.getHours()
 
+const developerSkills = ['React | React Native', 'TypeScript | JavaScript', 'Three.js', 'Python', 'Java', 'C | C++ | C#'];
+const artistSkills = ['Procreate | Clip Studio', 'UI | UX', 'Figma', 'Blender', 'CAD', 'Product Design'];
+
 export default function Home() {
   return (
     <>
@@ -36,7 +39,7 @@ export default function Home() {
                 ✦ 周 加 强&nbsp;
               </span>
             </Marquee>
-            <div className="container mx-auto px-4 py-16 text-primary">
+            <div className="container mx-auto px-4 py-16 h-screen text-primary">
               <h2 className="text-4xl font-bold mb-6">
                     Good 
                     {time >= 12 ? time >= 16 ? 
@@ -59,21 +62,41 @@ export default function Home() {
                       "> Morning
                       </span>}!
               </h2>
-              <h3 className="text-lg font-semibold">I&apos;m John, and I&apos;m a ...</h3>
-              <div className="grid md:grid-cols-2 gap-8 mb-6">
+              <h3 className="text-lg font-semibold mb-8">I&apos;m John, and I&apos;m a ...</h3>
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div>
-                  <h3 className="text-2xl font-semibold mb-4">Developer</h3>
-                  <p className="text-dim leading-relaxed">
+                  <h3 className="text-2xl font-theme mb-8">Developer</h3>
+                  <p className="text-dim leading-relaxed mb-4">
                     As a developer, I do most of my web dev work in front-end and love creating creative, visually-appealing, and intuitive designs.
                     I&apos;m excited about expanding into creative programming, whether it be in computer graphics or software.
                   </p>
+                  <p className='mb-2 font-bold text-center'>Languages</p>
+                  <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent mb-4" />
+                  <ul className="list-none space-y-2">
+                    {developerSkills.map((skill) => (
+                      <li key={skill} className="flex items-center gap-2">
+                        <span className="text-primary">✦</span>
+                        <span className="text-dim">{skill}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold mb-4">Artist</h3>
-                  <p className="text-dim leading-relaxed">
+                  <h3 className="text-2xl font-theme mb-8">Artist</h3>
+                  <p className="text-dim leading-relaxed mb-4">
                     As an artist, I work in primarily digital, and while I specialize in 2D work, I also mess around in 3D and VFX. I like to hone my
                     artistic abilities parallel to my other interests, as I feel it brings a more interesting spin to my work.
                   </p>
+                  <p className='mb-2 font-bold text-center'>Tool / Skill</p>
+                  <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent mb-4" />
+                  <ul className="list-none space-y-2">
+                    {artistSkills.map((skill) => (
+                      <li key={skill} className="flex items-center gap-2">
+                        <span className="text-primary">✦</span>
+                        <span className="text-dim">{skill}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
               <div>
@@ -83,10 +106,12 @@ export default function Home() {
               </div>
             </div>
             <ParallaxSection scene={<SpaceScene />}>
-              <p className='w-[40vw] text-[2vw] self-end uppercase mix-blend-difference'>
-                I'm really into 4-point stars haha
+              <p className='font-theme ml-auto text-[2vw] mix-blend-difference'>
+                Interactive
               </p>
-              <p className='text-[5vw] uppercase mix-blend-difference'>stars stars stars</p>
+              <p className='font-theme text-[6vh] mix-blend-difference'>
+                Star Field
+              </p>
             </ParallaxSection>
             <div className='h-screen'></div>
           </section>

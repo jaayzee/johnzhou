@@ -141,7 +141,7 @@ export default function ArtGallery() {
         <>
         {/* Mason Wall Gallery */}
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">✦ Artwork</h1>
+            <h1 className="text-3xl font-theme mb-8">Artwork ✦</h1>
             <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
             {posts.map((post) => (
                 <div 

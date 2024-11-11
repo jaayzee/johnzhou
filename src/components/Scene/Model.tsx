@@ -13,14 +13,17 @@ export default function Model() {
     
     const [bgColor, setBgColor] = useState(new Color(getComputedStyle(document.documentElement).getPropertyValue('--background')));
     const [textColor, setTextColor] = useState(new Color(getComputedStyle(document.documentElement).getPropertyValue('--foreground')));
+    const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
 
     useEffect(() => {
-        // three.js can't take css elements, must have exact color codes
         const updateColors = () => {
             const newBgColor = new Color(getComputedStyle(document.documentElement).getPropertyValue('--background'));
             const newTextColor = new Color(getComputedStyle(document.documentElement).getPropertyValue('--foreground'));
+            const newIsDarkMode = document.documentElement.classList.contains('dark');
+            
             setBgColor(newBgColor);
             setTextColor(newTextColor);
+            setIsDarkMode(newIsDarkMode);
         };
 
         // run initially
@@ -70,15 +73,15 @@ export default function Model() {
     return (
         <group>
             <Text 
-                font={'/fonts/PPNeueMontreal-Bold.otf'}
+                font={isDarkMode ? '/fonts/BICRODE.otf' : '/fonts/Estrella-Early.otf'}
                 position={[0, 0, -1]}
                 fontSize={0.5}
                 color={textColor}
                 anchorX="center"
                 anchorY="middle"
-                scale={viewport.width / 4.5}
+                scale={isDarkMode ? viewport.width / 6 : viewport.width / 4}
             >
-                ✦ JOHN ✦ ZHOU ✦
+                ✦ JOHN {isDarkMode ? '' : '  '}✦ ZHOU ✦ {/* Estrella fontface requires additional spaces for proper look */}
             </Text>
             <PresentationControls
                 global={false}

@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'BICRODE';
+  src: url('/fonts/BICRODE.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Estrella';
+  src: url('/fonts/Estrella-Early.otf') format('opentype');
+  size-adjust: 300%;
+}
+
 @layer base {
   :root {
     --background: #e9e9e9;
@@ -34,6 +45,8 @@
     --border: #e5e5e5;
     --input: #e5e5e5;
     --ring: #171717;
+
+    --font-theme: 'Estrella';
   }
 
   .dark {
@@ -67,6 +80,8 @@
     --border: #262626;
     --input: #262626;
     --ring: #d4d4d4;
+
+    --font-theme: 'BICRODE';
   }
 }
 

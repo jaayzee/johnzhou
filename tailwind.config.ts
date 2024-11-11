@@ -47,6 +47,9 @@ const config: Config = {
           foreground: 'var(--dim-foreground)',
         }
       },
+      fontFamily: {
+        theme: 'var(--font-theme)',
+      },
     },
   },
   plugins: [],

@@ -11,6 +11,7 @@ const Navbar = () => {
 
   const navItems = [
     { label: 'Home', href: '/' },
+    { label: 'Work', href: '/work' },
     { label: 'Art', href: '/art' },
     { label: 'Resume', href: '/resume' },
     { label: 'Contact', href: '/contact' }
@@ -24,19 +25,19 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-foreground">JOHN ZHOU</Link>
+            <Link href="/" className="text-xl font-bold text-foreground">JZ</Link>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-bold transition-colors ${
                   isActive(item.href)
-                    ? 'text-background bg-foreground'
-                    : 'text-foreground hover:text-destructive'
+                    ? 'text-foreground'
+                    : 'text-dim hover:text-destructive'
                 }`}
               >
                 {item.label}
