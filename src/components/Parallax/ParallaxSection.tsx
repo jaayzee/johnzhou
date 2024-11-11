@@ -23,7 +23,7 @@ export default function ParallaxSection({ scene, children }: ParallaxSectionProp
       className='relative flex items-center justify-center h-screen overflow-hidden'
       style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
-      <div className='relative z-10 p-10 mix-blend-difference text-white w-full h-full flex flex-col justify-between'>
+      <div className='relative z-10 p-10 mix-blend-difference text-white w-full h-full flex flex-col justify-between pointer-events-none'>
         {children}
       </div>
       <div className='fixed top-[-10vh] left-0 h-[120vh] w-full'>

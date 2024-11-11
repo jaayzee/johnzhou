@@ -84,9 +84,9 @@ export default function Home() {
             </div>
             <ParallaxSection scene={<SpaceScene />}>
               <p className='w-[40vw] text-[2vw] self-end uppercase mix-blend-difference'>
-                Not sure what to put here yet. Will probably figure smth out idk
+                I'm really into 4-point stars haha
               </p>
-              <p className='text-[5vw] uppercase mix-blend-difference'>SOMETHING ABOUT ME</p>
+              <p className='text-[5vw] uppercase mix-blend-difference'>stars stars stars</p>
             </ParallaxSection>
             <div className='h-screen'></div>
           </section>
