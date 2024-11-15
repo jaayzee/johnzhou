@@ -152,7 +152,7 @@ export default function ArtGallery() {
                 <div className="relative rounded-lg overflow-hidden">
                     <Image
                     src={post.media_url}
-                    alt={post.caption || 'Instagram post'}
+                    alt={post.caption ? removeHashtags(post.caption) : 'Instagram post'}
                     width={500}
                     height={500}
                     className="w-full h-auto transition-all duration-300 
@@ -255,7 +255,7 @@ export default function ArtGallery() {
                     {/* Caption */}
                     {selectedPost.caption && (
                     <div className="w-full p-2 font-bold text-white text-2xl rounded mt-4">
-                        <p className="text-center">{selectedPost.caption}</p>
+                        <p className="text-center">{removeHashtags(selectedPost.caption)}</p>
                     </div>
                     )}
                 </div>

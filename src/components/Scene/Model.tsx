@@ -53,14 +53,23 @@ export default function Model() {
     }, []);
 
     // mesh transmission controls
-    const materialProps = useControls({
-        thickness: { value: 0.15, min: 0, max: 3, step: 0.05 },
-        roughness: { value: 0.3, min: 0, max: 1, step: 0.1 },
-        transmission: {value: 1, min: 0, max: 1, step: 0.1},
-        ior: { value: 1.2, min: 0, max: 3, step: 0.1 },
-        chromaticAberration: { value: 0.10, min: 0, max: 1},
-        backside: { value: true },
-    })
+    // const materialProps = useControls({
+    //     thickness: { value: 0.15, min: 0, max: 3, step: 0.05 },
+    //     roughness: { value: 0.3, min: 0, max: 1, step: 0.1 },
+    //     transmission: {value: 1, min: 0, max: 1, step: 0.1},
+    //     ior: { value: 1.2, min: 0, max: 3, step: 0.1 },
+    //     chromaticAberration: { value: 0.10, min: 0, max: 1},
+    //     backside: { value: true },
+    // })
+
+    const materialProps = {
+        thickness: 0.15,
+        roughness: 0.3,
+        transmission: 1,
+        ior: 1.2,
+        chromaticAberration: 0.1,
+        backside: true,
+    }
     
     // mesh auto-rotation
     useFrame(({}) => {

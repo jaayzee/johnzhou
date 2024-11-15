@@ -47,12 +47,14 @@ export default function Home() {
                         bg-[linear-gradient(40deg,_#f8ceaf,_#cbbffd_70%)] 
                         bg-clip-text 
                         text-transparent
+                        font-black
                       "> Evening
                       </span> : 
                       <span className="
                         bg-[linear-gradient(40deg,_#fca344,_#55acfa_70%)] 
                         bg-clip-text 
                         text-transparent
+                        font-black
                       "> Afternoon
                       </span> : 
                       <span className="
@@ -67,8 +69,9 @@ export default function Home() {
                 <div>
                   <h3 className="text-2xl font-theme mb-8">Developer</h3>
                   <p className="text-dim leading-relaxed mb-4">
-                    As a developer, I do most of my web dev work in front-end and love creating creative, visually-appealing, and intuitive designs.
-                    I&apos;m excited about expanding into creative programming, whether it be in computer graphics or software.
+                    As a developer, I do most of my web dev work in front-end and love fabricating creative, visually-appealing, and intuitive designs of all kinds.
+                    I&apos;m excited about continuing to expanding into creative programming, whether it be in computer graphics / shaders, games, or further into software.
+                    I thrive in environments that value collaboration and feel like a community inside and outside of work.
                   </p>
                   <p className='mb-2 font-bold text-center'>Languages</p>
                   <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent mb-4" />
@@ -85,7 +88,29 @@ export default function Home() {
                   <h3 className="text-2xl font-theme mb-8">Artist</h3>
                   <p className="text-dim leading-relaxed mb-4">
                     As an artist, I work in primarily digital, and while I specialize in 2D work, I also mess around in 3D and VFX. I like to hone my
-                    artistic abilities parallel to my other interests, as I feel it brings a more interesting spin to my work.
+                    artistic abilities parallel to my other interests, as I feel it brings a more interesting spin to my work. I&apos;m very into stylized rendering
+                    and want to create immerisive environments and landscapes. I take heavy inspiration from artists like{' '}
+                    <a 
+                      href='https://felicia-chen.com/'
+                      target='_blank'
+                      className='font-bold text-foreground underline hover:text-destructive'
+                    >
+                      Felicia Chen
+                    </a>,{' '}
+                    <a 
+                      href='https://aliyachen.com/'
+                      target='_blank'
+                      className='font-bold text-foreground underline hover:text-destructive'
+                    >
+                      Aliya Chen
+                    </a>, and{' '}
+                    <a
+                      href='https://www.instagram.com/plunteere/?hl=en'
+                      target='_blank'
+                      className='font-bold text-foreground underline hover:text-destructive'
+                    >
+                      Plunteere
+                    </a>.
                   </p>
                   <p className='mb-2 font-bold text-center'>Tool / Skill</p>
                   <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent mb-4" />
