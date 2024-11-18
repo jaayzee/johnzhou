@@ -17,7 +17,8 @@ const ThemeSwitcher = () => {
             <button
                 onClick={() => setTheme(currentTheme === 'dark' ? 'light' : 'dark')}
                 type='button'
-                className='flex h-10 w-10 p-2 item-center justify-center rounded-md border border-gray-800 text-gray-800 focus:outline-none focus:ring-gray-200 dark:border-slate-300 dark:text-white'
+                className='flex h-10 w-10 p-2 item-center justify-center rounded-md border border-foreground transition-all duration-500
+                            text-foreground bg-background-transparent backdrop-blur-sm hover:text-destructive hover:border-destructive'
             >
                  <svg
                     className="dark:hidden"

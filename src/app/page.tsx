@@ -64,7 +64,7 @@ export default function Home() {
                       "> Morning
                       </span>}!
               </h2>
-              <h3 className="text-lg font-semibold mb-8">I&apos;m John, and I&apos;m a ...</h3>
+              <h3 className="text-lg font-semibold mb-8">I&apos;m John, and I&apos;m a(n) ...</h3>
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div>
                   <h3 className="text-2xl font-theme mb-8">Developer</h3>
@@ -131,14 +131,16 @@ export default function Home() {
               </div>
             </div>
             <ParallaxSection scene={<SpaceScene />}>
-              <p className='font-theme ml-auto text-[2vw] mix-blend-difference'>
+              <p className='font-theme ml-auto text-[2vw]'>
                 Interactive
               </p>
-              <p className='font-theme text-[6vh] mix-blend-difference'>
+              <p className='font-theme text-[6vh]'>
                 Star Field
               </p>
             </ParallaxSection>
-            <div className='h-screen'></div>
+            <div className='h-screen'>
+              
+            </div>
           </section>
         </main>
     </>

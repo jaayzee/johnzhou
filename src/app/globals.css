@@ -47,6 +47,7 @@
     --ring: #171717;
 
     --font-theme: 'Estrella';
+    --background-transparent: rgba(233, 233, 233, 0.5);
   }
 
   .dark {
@@ -82,6 +83,7 @@
     --ring: #d4d4d4;
 
     --font-theme: 'BICRODE';
+    --background-transparent: rgba(10, 10, 10, 0.5);
   }
 }
 
@@ -94,5 +96,14 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

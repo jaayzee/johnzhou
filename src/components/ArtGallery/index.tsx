@@ -22,7 +22,7 @@ export default function ArtGallery() {
 
     const removeHashtags = (caption: string) => {
         if (!caption) return '';
-        return caption.split('\n')[0].substring(0, caption.split('\n')[0].length - 1);
+        return caption.split('\n')[0].substring(0, caption.split('\n')[0].length);
     };
 
     useEffect(() => {

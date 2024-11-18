@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
     await transport.sendMail(mailOptions);
     return NextResponse.json({ message: 'Email sent successfully' });
-  } catch (err: any) { // Type assertion for error
+  } catch (err: any) {
     console.error('Detailed error:', err);
     return NextResponse.json(
       { 

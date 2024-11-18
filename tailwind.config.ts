@@ -13,6 +13,7 @@ const config: Config = {
         input: 'var(--input)',
         ring: 'var(--ring)',
         background: 'var(--background)',
+        'background-transparent': 'var(--background-transparent)',
         foreground: 'var(--foreground)',
         primary: {
           DEFAULT: 'var(--primary)',
@@ -50,6 +51,7 @@ const config: Config = {
       fontFamily: {
         theme: 'var(--font-theme)',
       },
+      
     },
   },
   plugins: [],

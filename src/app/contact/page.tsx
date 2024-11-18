@@ -17,14 +17,13 @@ const Contact: FC = () => {
     reset,
     formState: { isSubmitting },
   } = useForm<FormData>({
-    mode: 'onSubmit', // Only validate on submit
-    reValidateMode: 'onSubmit' // Only revalidate on submit
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit'
   });
 
   const [buttonState, setButtonState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const onSubmit = async (data: FormData) => {
-    // Additional validation
     if (data.message.length < 10) {
       alert('Message must be at least 10 characters');
       return;
