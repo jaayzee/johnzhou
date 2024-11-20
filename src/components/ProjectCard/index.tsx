@@ -150,7 +150,7 @@ export const ProjectCard = ({ project }: { project: Project }) => (
     </div>
     
     <div className="flex gap-4 px-6 pb-6">
-      <div className={`${project.video ? 'lg:hidden' : ''} w-3 mx-2 rounded-b-2xl bg-foreground`} />
+      <div className={`${project.video ? 'lg:hidden' : ''} w-3 mx-4 rounded-b-2xl bg-foreground`} />
       <div className="flex-1">
         <div className="flex flex-col lg:flex-row lg:gap-6 pt-6">
           {project.video ? (

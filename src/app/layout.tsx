@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from '@/components/Navbar'
-import ThemeProvider from "./utils/ThemeProvider";
+import { ThemeProvider } from "next-themes";
 import ThemeSwitcher from "@/components/DarkModeSwitch/ThemeSwitcher";
-
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,9 +17,16 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "JOZO",
+  title: "J O Z O",
   description: "Come take a look ( ˘ ³˘)♥︎",
+  icons: {
+    icon: [
+      { url: '/medias/favicon-dark.ico', media: '(prefers-color-scheme: light)' },
+      { url: '/medias/favicon-light.ico', media: '(prefers-color-scheme: dark)' }
+    ]
+  }
 };
+
 
 export default function RootLayout({
   children,
@@ -30,9 +36,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider>
+        <ThemeProvider attribute="class" enableSystem={true} defaultTheme="system">
           <ThemeSwitcher />
           <Navbar />
           {children}
