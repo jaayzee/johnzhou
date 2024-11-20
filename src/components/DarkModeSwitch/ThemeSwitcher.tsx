@@ -3,26 +3,13 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 const ThemeSwitcher = () => {
-    const { setTheme } = useTheme();
-    
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = (e: MediaQueryListEvent) => {
-            setTheme(e.matches ? 'dark' : 'light');
-        };
-        
-        // Set initial theme
-        setTheme(mediaQuery.matches ? 'dark' : 'light');
-        
-        // Listen for changes
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, [setTheme]);
+    const { systemTheme, theme, setTheme } = useTheme();
+    const currentTheme = theme === 'system' ? systemTheme : theme;
 
     return (
         <div className='fixed right-5 bottom-5 z-[100]'>
             <button
-                onClick={() => setTheme('system')}
+                onClick={() => setTheme(currentTheme === 'dark' ? 'light' : 'dark')}
                 type='button'
                 className='flex h-10 w-10 p-2 item-center justify-center rounded-md border border-foreground transition-all duration-500
                             text-foreground bg-background-transparent backdrop-blur-sm hover:text-destructive hover:border-destructive'
@@ -49,7 +36,7 @@ const ThemeSwitcher = () => {
                 </svg>
             </button>
         </div>
-    );
+    )
 };
 
 export default ThemeSwitcher;
