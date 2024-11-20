@@ -27,7 +27,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
           <Link href="/" className="text-xl font-bold">
-            <Logo className="w-10 h-10 text-foreground hover:text-destructive transition-all transform hover:rotate-180 duration-500"/>
+            <Logo className="w-10 h-10 text-foreground hover:text-destructive transition-transform transform hover:rotate-180 duration-500"/>
           </Link>
           </div>
 

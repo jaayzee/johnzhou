@@ -52,7 +52,6 @@ const config: Config = {
       fontFamily: {
         theme: 'var(--font-theme)',
       },
-      
     },
   },
   plugins: [],
