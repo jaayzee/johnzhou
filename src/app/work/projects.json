@@ -26,7 +26,7 @@
         "video": "https://www.youtube.com/watch?v=wVDommnLwXA&ab_channel=AndrewYin",
         "stack": ["Snowflake", "Snowflake Arctic", "Python", "FoodData Central API", "Firebase"]
     }, {
-        "name": "Skim-it",
+        "name": "Skimit",
         "link": "https://devpost.com/software/skim-it",
         "desc": "Wrote a web app for succinct and concise local/global news in the form of tldrs, in the reddit format for Hacktech 2024.",
         "quote": "News media app designed to overcome the barriers of short-attention span in social media use through promotion of \"social-media-like\" news posts using LLM integrated summary and title generation.",

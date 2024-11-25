@@ -51,6 +51,10 @@ const config: Config = {
       },
       fontFamily: {
         theme: 'var(--font-theme)',
+        bulgatti: ['Bulgatti', 'san-serif'],
+      },
+      screens: {
+        'xs': '500px',
       },
     },
   },

@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Logo from '@/../public/medias/JZLogo'
+import { useTheme } from 'next-themes';
+import LogoSharp from '../../../public/medias/LogoSharp';
+import LogoGoop from '../../../public/medias/LogoGoop';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { resolvedTheme } = useTheme();
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -19,16 +21,17 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => pathname === path;
+  const LogoComponent = resolvedTheme === 'dark' ? LogoSharp : LogoGoop;
 
   return (
-    <nav className="bg-background-transparent backdrop-blur-sm fixed w-full z-50">
+    <nav className="select-none bg-background-transparent backdrop-blur-sm fixed w-full z-50">
       <div className="mx-auto px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-          <Link href="/" className="text-xl font-bold">
-            <Logo className="w-10 h-10 text-foreground hover:text-destructive transition-transform transform hover:rotate-180 duration-500"/>
-          </Link>
+            <Link href="/" className="text-xl font-bold">
+              <LogoComponent className="w-10 h-10 text-foreground hover:text-destructive transition-transform transform hover:rotate-180 duration-500"/>
+            </Link>
           </div>
 
           {/* Desktop Menu */}
@@ -37,10 +40,10 @@ const Navbar = () => {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-bold transition-colors ${
+                className={`px-3 py-2 rounded-md text-sm font-bold transition-all duration-500 ${
                   isActive(item.href)
                     ? 'text-foreground'
-                    : 'text-dim hover:text-destructive transition-all duration-500 '
+                    : 'text-dim hover:text-destructive hover:outline-2 hover:outline-offset-2 hover:outline-destructive'
                 }`}
               >
                 {item.label}
@@ -52,9 +55,25 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-foreground hover:text-white focus:outline-none"
+              className="text-foreground hover:text-destructive focus:outline-none"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              <div className="w-6 h-6 relative flex items-center justify-center">
+                <span
+                  className={`absolute h-0.5 w-5 bg-current transform transition-all duration-300 ease-in-out ${
+                    isOpen ? 'rotate-45 translate-y-0' : '-translate-y-1.5'
+                  }`}
+                />
+                <span
+                  className={`absolute h-0.5 w-5 bg-current transform transition-all duration-100 ease-in-out ${
+                    isOpen ? 'opacity-0' : 'translate-y-0'
+                  }`}
+                />
+                <span
+                  className={`absolute h-0.5 w-5 bg-current transform transition-all duration-300 ease-in-out ${
+                    isOpen ? '-rotate-45 translate-y-0' : 'translate-y-1.5'
+                  }`}
+                />
+              </div>
             </button>
           </div>
         </div>

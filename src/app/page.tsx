@@ -1,8 +1,18 @@
 import dynamic from 'next/dynamic';
 import Marquee from 'react-fast-marquee';
+import { MousePointerClick, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+
 
 const Scene = dynamic(() => import('@/components/Scene/index'), {
     ssr: false,
+})
+
+const SpaceScene = dynamic(() => import('@/components/SpaceScene/index'), {
+  ssr: false,
+})
+
+const PolaroidScene = dynamic(() => import('@/components/PolaroidScene/index'), {
+  ssr: false,
 })
 
 const ParallaxWrapper = dynamic(() => import('@/components/Parallax/ParallaxWrapper'), {
@@ -13,9 +23,9 @@ const ParallaxSection = dynamic(() => import('@/components/Parallax/ParallaxSect
   ssr: false
 });
 
-const SpaceScene = dynamic(() => import('@/components/SpaceScene/index'), {
-  ssr: false,
-})
+const OverlayCards = dynamic(() => import('@/components/OverlayCards'), {
+  ssr: false
+});
 
 const date = new Date()
 const time = date.getHours()
@@ -23,128 +33,125 @@ const time = date.getHours()
 const developerSkills = ['React | React Native', 'TypeScript | JavaScript', 'Three.js', 'Python', 'Java', 'C | C++ | C#'];
 const artistSkills = ['Procreate | Clip Studio', 'UI | UX', 'Figma', 'Blender', 'CAD', 'Product Design'];
 
+const DevCard = () => (
+  <>
+    <h3 className="text-2xl font-theme bg-background-transparent p-8 rounded-t-2xl">Developer</h3>
+    <p className="text-dim leading-relaxed p-8">
+      As a developer, I do most of my web dev work in front-end and love fabricating creative, visually-appealing, and intuitive designs of all kinds.
+    </p>
+    <div className='bg-foreground-transparent rounded-b-2xl'>
+      <p className="font-bold text-center p-4">Languages</p>
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent" />
+      <div className="flex flex-wrap justify-center gap-2 p-4">
+        {developerSkills.map((skill, index) => (
+          <span
+            key={index}
+            className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold">
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  </>
+);
+
+const ArtistCard = () => (
+  <>
+    <h3 className="text-2xl font-theme bg-background-transparent p-8 rounded-t-2xl">Artist</h3>
+    <p className="text-dim leading-relaxed p-8">
+      As an artist, I work primarily in digital, and while I specialize in 2D work, I also mess around in 3D and VFX.
+    </p>
+    <div className='bg-foreground-transparent rounded-b-2xl'>
+      <p className="font-bold text-center p-4">Tools / Skills</p>
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent" />
+      <div className="flex flex-wrap justify-center gap-2 p-4">
+        {artistSkills.map((skill, index) => (
+          <span
+            key={index}
+            className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold">
+          {skill}
+        </span>
+        ))}
+      </div>
+    </div>
+  </>
+);
+
 export default function Home() {
   return (
-    <>
-        <main className="relative">
-          <ParallaxWrapper>
-            <Scene />
-          </ParallaxWrapper>
-          <section className="absolute top-[100vh] w-full bg-background">
-            <Marquee 
-              autoFill={true}
-              className='bg-foreground py-2'
-            >
-              <span className='font-black text-xl text-background'>
-                ✦ 周 加 强&nbsp;
-              </span>
-            </Marquee>
-            <div className="container mx-auto px-4 py-16 h-screen text-primary flex items-center">
-              <div className="w-full"> 
-                <h2 className="text-4xl font-bold mb-6">
-                      Good 
-                      {time >= 12 ? time >= 16 ? 
-                        <span className="
-                          bg-[linear-gradient(40deg,_#f8ceaf,_#cbbffd_70%)] 
-                          bg-clip-text 
-                          text-transparent
-                          font-black
-                        "> Evening
-                        </span> : 
-                        <span className="
-                          bg-[linear-gradient(40deg,_#fca344,_#55acfa_70%)] 
-                          bg-clip-text 
-                          text-transparent
-                          font-black
-                        "> Afternoon
-                        </span> : 
-                        <span className="
-                          bg-[linear-gradient(40deg,_#fca344,_#55acfa_70%)] 
-                          bg-clip-text 
-                          text-transparent
-                        "> Morning
-                        </span>}!
-                </h2>
-                <h3 className="text-lg font-semibold mb-8">I&apos;m John, and I&apos;m a(n) ...</h3>
-                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div>
-                    <h3 className="text-2xl font-theme mb-8">Developer</h3>
-                    <p className="text-dim leading-relaxed mb-4">
-                      As a developer, I do most of my web dev work in front-end and love fabricating creative, visually-appealing, and intuitive designs of all kinds.
-                      I&apos;m excited about continuing to expanding into creative programming, whether it be in computer graphics / shaders, games, or further into software.
-                      I thrive in environments that value collaboration and feel like a community inside and outside of work.
-                    </p>
-                    <p className='mb-2 font-bold text-center'>Languages</p>
-                    <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent mb-4" />
-                    <ul className="list-none space-y-2">
-                      {developerSkills.map((skill) => (
-                        <li key={skill} className="flex items-center gap-2">
-                          <span className="text-primary">✦</span>
-                          <span className="text-dim">{skill}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-theme mb-8">Artist</h3>
-                    <p className="text-dim leading-relaxed mb-4">
-                      As an artist, I work in primarily digital, and while I specialize in 2D work, I also mess around in 3D and VFX. I like to hone my
-                      artistic abilities parallel to my other interests, as I feel it brings a more interesting spin to my work. I&apos;m very into stylized rendering
-                      and want to create immerisive environments and landscapes. I take heavy inspiration from artists like{' '}
-                      <a 
-                        href='https://felicia-chen.com/'
-                        target='_blank'
-                        className='font-bold text-foreground underline hover:text-destructive'
-                      >
-                        Felicia Chen
-                      </a>,{' '}
-                      <a 
-                        href='https://aliyachen.com/'
-                        target='_blank'
-                        className='font-bold text-foreground underline hover:text-destructive'
-                      >
-                        Aliya Chen
-                      </a>, and{' '}
-                      <a
-                        href='https://www.instagram.com/plunteere/?hl=en'
-                        target='_blank'
-                        className='font-bold text-foreground underline hover:text-destructive'
-                      >
-                        Plunteere
-                      </a>.
-                    </p>
-                    <p className='mb-2 font-bold text-center'>Tool / Skill</p>
-                    <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent mb-4" />
-                    <ul className="list-none space-y-2">
-                      {artistSkills.map((skill) => (
-                        <li key={skill} className="flex items-center gap-2">
-                          <span className="text-primary">✦</span>
-                          <span className="text-dim">{skill}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-dim leading-relaxed">
-                  I&apos;m currently pursuing my B.S in Mathematics - Computer Science at the University of California, San Diego, and will be graduating March of 2025 with a minor in Engineering Mechanics.
-                    </p>
-                </div>
+    <main>
+      {/* Main Scene */}
+      <ParallaxWrapper>
+        <Scene />
+        <ChevronDown className="text-foreground w-12 h-12 absolute bottom-8 left-1/2 -translate-x-1/2 -ml-6 animate-bounce" />
+      </ParallaxWrapper>
+
+      {/* Content */}
+      <div className="w-full bg-background">
+        {/* Marquee and Cards */}
+        <div className="h-screen flex flex-col">
+          <Marquee 
+            autoFill={true}
+            className='bg-foreground py-2 select-none'
+          >
+            <span className='font-black text-xl text-background'>
+              ✦ 周 加 强&nbsp;
+            </span>
+          </Marquee>
+          <div className="flex-1 px-8 flex flex-col justify-evenly">
+            <div>
+              <h2 className="text-center text-4xl font-bold">
+                Good
+                {time >= 12 ? time >= 16 ? 
+                  <span style={{WebkitTextStroke: '1px var(--foreground-transparent)'}} className="bg-gradient-to-r from-[#f8ceaf] to-[#cbbffd] bg-clip-text text-transparent font-black"> Evening</span> : 
+                  <span style={{WebkitTextStroke: '1px var(--foreground-transparent)'}} className="bg-gradient-to-r from-[#fca344] to-[#55acfa] bg-clip-text text-transparent font-black"> Afternoon</span> : 
+                  <span style={{WebkitTextStroke: '1px var(--foreground-transparent)'}} className="bg-gradient-to-r from-[#fca344] to-[#55acfa] bg-clip-text text-transparent"> Morning</span>
+                }!
+              </h2>
+              <h3 className="flex justify-center text-dim text-lg font-semibold">
+                I&apos;m John, and I&apos;m a(n) ...
+              </h3>
+            </div>
+            <div className="flex justify-center min-h-[30rem]">
+              <OverlayCards
+                leftChild={<DevCard />}
+                rightChild={<ArtistCard />}
+              />
+            </div>
+            <div className="flex justify-center">
+              <p className="text-dim leading-relaxed max-w-2xl text-center mt-9 mb-8 xs:mt-0">
+                I&apos;m currently pursuing my BS in <strong>Mathematics|Computer Science</strong> at the <strong>University of California, San Diego</strong>,
+                and will be graduating March of 2025 with a minor in <strong>Engineering Mechanics</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Star Field */}
+        <div>
+          <ParallaxSection scene={<SpaceScene />}>
+            <div className='select-none relative z-10 w-full h-full flex flex-col justify-between pointer-events-none'>
+              <div className='ml-auto bg-background-transparent backdrop-blur-sm my-5 pl-5 pr-10 py-5 rounded-l-xl'>
+                <p className='flex space-x-4 text-foreground'>
+                  <ChevronLeft />
+                  <MousePointerClick />
+                  <ChevronRight />
+                </p>
+              </div>
+              <div className='mr-auto bg-background-transparent backdrop-blur-sm my-5 px-20 py-10 rounded-r-xl'>
+                <p className='font-theme text-foreground text-[4vh]'>
+                  Snapshots
+                </p>
               </div>
             </div>
-            <ParallaxSection scene={<SpaceScene />}>
-              <p className='font-theme ml-auto text-[2vw]'>
-                Interactive
-              </p>
-              <p className='font-theme text-[6vh]'>
-                Star Field
-              </p>
-            </ParallaxSection>
-            <div className='h-screen'>
-              
-            </div>
-          </section>
-        </main>
-    </>
-  )
+          </ParallaxSection>
+        </div>
+
+        {/* Polaroids */}
+        <div className='h-screen overflow-clip overflow-y-visible'>
+          <PolaroidScene />
+        </div>
+      </div>
+    </main>
+  );
 }

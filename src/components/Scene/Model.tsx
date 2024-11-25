@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { PresentationControls, MeshTransmissionMaterial, useGLTF, Text } from "@react-three/drei";
 import { useFrame, useThree } from '@react-three/fiber';
 import { Mesh, Color } from 'three';
-import { useControls } from 'leva';
+// import { useControls } from 'leva';
 
 export default function Model() {
     const { nodes } = useGLTF("/medias/star.glb");

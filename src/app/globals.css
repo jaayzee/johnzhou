@@ -1,6 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
+
+.font-handwriting {
+  font-family: 'Homemade Apple', cursive;
+}
+
+@font-face {
+  font-family: 'Bulgatti';
+  src: url('/fonts/Bulgatti.ttf') format('truetype');
+}
 
 @font-face {
   font-family: 'BICRODE';
@@ -15,8 +25,8 @@
 
 @layer base {
   :root {
-    --background: #e9e9e9;
-    --foreground: #171717;
+    --background: #D1D1D1;
+    --foreground: #121212;
     
     --card: #ffffff;
     --card-foreground: #171717;
@@ -30,16 +40,16 @@
     --secondary: #f5f5f5;
     --secondary-foreground: #171717;
     
-    --muted: #cbcbcb;
+    --muted: #939393;
     --muted-foreground: #737373;
     
     --accent: #f5f5f5;
     --accent-foreground: #171717;
     
-    --destructive: #ef4444;
+    --destructive: #4A6FA5;
     --destructive-foreground: #ffffff;
 
-    --dim: #5c5c5c;
+    --dim: #43454d;
     --dim-foreground: #ffffff;
     
     --border: #e5e5e5;
@@ -47,15 +57,15 @@
     --ring: #171717;
 
     --font-theme: 'Estrella';
-    --background-transparent: rgba(233, 233, 233, 0.5);
-    --foreground-transparent: rgba(10, 10, 10, 0.05);
+    --background-transparent: rgba(209, 209, 209, 0.5);
+    --foreground-transparent: rgba(18, 18, 18, 0.2);
   }
 
   .dark {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #121212;
+    --foreground: #F8F9FA;
     
-    --card: #0a0a0a;
+    --card: #71717A;
     --card-foreground: #ededed;
     
     --popover: #0a0a0a;
@@ -70,10 +80,10 @@
     --muted: #262626;
     --muted-foreground: #a3a3a3;
     
-    --accent: #262626;
+    --accent: #363636;
     --accent-foreground: #ededed;
     
-    --destructive: #449aef;
+    --destructive: #FF3D00;
     --destructive-foreground: #ededed;
 
     --dim: #919191;
@@ -84,8 +94,8 @@
     --ring: #d4d4d4;
 
     --font-theme: 'BICRODE';
-    --background-transparent: rgba(10, 10, 10, 0.5);
-    --foreground-transparent: rgba(233, 233, 233, 0.05);
+    --background-transparent: rgba(18, 18, 18, 0.5);
+    --foreground-transparent: rgba(248, 249, 250, 0.05);
   }
 }
 
@@ -95,6 +105,86 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
  
+/* Play-Large Button Customization */
+.plyr__control--overlaid {
+  background: var(--destructive) !important;
+  border-radius: 15px !important;
+  width: 80px !important;
+  height: 60px !important;
+}
+
+.plyr__control--overlaid svg {
+  fill: #ffffff !important;
+  width: 50px !important;
+  height: 30px !important;
+}
+
+/* Progress Bar Customization */
+.plyr__progress__container input[type="range"] {
+  color: var(--destructive) !important;
+}
+
+.plyr__progress__container .plyr__progress__buffer {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.plyr__progress__container .plyr__tooltip {
+  background: var(--destructive) !important;
+}
+
+/* Volume Bar Customization */
+.plyr__volume input[type="range"] {
+  color: var(--destructive) !important;
+}
+
+/* Ensure smooth transitions if needed */
+.plyr__control--overlaid,
+.plyr__progress__container input[type="range"],
+.plyr__volume input[type="range"] {
+  transition: all 0.3s ease;
+}
+
+/* Hide controls initially */
+.plyr__controls {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+/* Show controls when playing */
+.plyr--playing .plyr__controls {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Apply grainy blur filter when video is not playing */
+.plyr__video-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(5px);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Remove the filter when video is playing */
+.plyr--playing .plyr__video-wrapper::before {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Remove the blur filter on hover */
+.plyr:hover .plyr__video-wrapper::before {
+  opacity: 0;
+  visibility: hidden;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

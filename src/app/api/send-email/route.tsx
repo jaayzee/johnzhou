@@ -2,9 +2,20 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
+interface EmailData {
+  email: string;
+  message: string;
+}
+
+interface EmailError {
+  message?: string;
+  code?: string;
+  response?: string;
+}
+
 export async function POST(request: Request) {
   try {
-    const { email, message } = await request.json();
+    const { email, message }: EmailData = await request.json();
 
     const transport = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -33,12 +44,13 @@ export async function POST(request: Request) {
 
     await transport.sendMail(mailOptions);
     return NextResponse.json({ message: 'Email sent successfully' });
-  } catch (err: any) {
-    console.error('Detailed error:', err);
+  } catch (err) {
+    const error = err as EmailError;
+    console.error('Detailed error:', error);
     return NextResponse.json(
       { 
         error: 'Failed to send email', 
-        details: err?.message || 'Unknown error occurred'
+        details: error?.message || 'Unknown error occurred'
       },
       { status: 500 }
     );

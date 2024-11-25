@@ -1,8 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Globe, Link as LinkIcon } from 'lucide-react';
+import Plyr from "plyr-react";
+import "plyr-react/plyr.css";
+import ErrorBoundary from './ErrorBoundary';
+import Image from 'next/image';
 
 interface Project {
   name: string;
@@ -13,20 +17,18 @@ interface Project {
   stack?: string[];
 }
 
-const getYouTubeEmbedUrl = (url: string) => {
+const getYouTubeVideoId = (url: string) => {
   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   const match = url.match(regExp);
   const videoId = (match && match[7]?.length === 11) ? match[7] : null;
-  return videoId 
-    ? `https://www.youtube.com/embed/${videoId}`
-    : "https://www.youtube.com/embed/dQw4w9WgXcQ?si=dWXVP64nIUMb21G0";
+  return videoId || 'dQw4w9WgXcQ';
 };
 
 export const Title = ({ name, link, isMobile = false }: { name: string, link?: string, isMobile?: boolean }) => {  
   const TitleContent = (
-    <h2 className="text-4xl font-black tracking-wider text-background flex w-full min-w-0 group-hover:text-destructive transition-colors">
+    <h2 className="text-4xl font-black tracking-wider text-foreground flex w-full min-w-0 group-hover:text-destructive transition-colors">
       <span className="flex-shrink-0 whitespace-nowrap">✦&nbsp;</span>
-      <span className="break-words uppercase overflow-hidden overflow-ellipsis">{name}</span>
+      <span className="break-words uppercase overflow-ellipsis">{name}</span>
     </h2>
   );
 
@@ -55,7 +57,7 @@ export const TechStack = ({ stack }: { stack: string[] }) => (
     {stack.map((tech, index) => (
       <span 
         key={index} 
-        className="px-4 py-2 rounded-full bg-foreground text-background text-sm font-bold"
+        className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold"
       >
         {tech}
       </span>
@@ -75,11 +77,13 @@ export const LinkPreview = ({ url }: { url: string }) => {
       className="block mt-4 rounded-xl border-2 border-muted hover:border-destructive transition group overflow-hidden"
     >
       <div className="p-4 flex items-start gap-4">
-        <img 
-          src={favicon}
-          alt={`${domain} favicon`}
-          className="w-12 h-12 rounded-xl group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
+        <Image 
+            src={favicon}
+            alt={`${domain} favicon`}
+            width={48}
+            height={48}
+            className="w-12 h-12 rounded-xl group-hover:scale-105 transition-transform duration-500"
+            priority={false}
         />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 text-dim group-hover:text-destructive">
@@ -113,49 +117,94 @@ export const QuoteBlock = ({ quote }: { quote: string }) => (
   </div>
 );
 
-export const VideoCard = ({ project }: { project: Project }) => (
-  <>
-    <div className="relative lg:w-2/3 aspect-video group overflow-hidden rounded-2xl">
-      <iframe
-        className="absolute top-0 left-0 w-full h-full rounded-2xl transition-all duration-500"
-        src={getYouTubeEmbedUrl(project.video!)}
-        title={`${project.name} video`}
-        allowFullScreen
-      />
-    </div>
-    <div className="hidden lg:block lg:w-1/3 bg-foreground-transparent rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.2)] h-fit">
-      <div className="bg-foreground p-6 rounded-t-2xl">
-        <Title name={project.name} link={project.link} />
+export const VideoCard = ({ project }: { project: Project }) => {
+  const videoId = project.video ? getYouTubeVideoId(project.video) : '';
+
+  // set youtube configs
+  useEffect(() => {
+    const loadYouTubeAPI = () => {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    };
+
+    loadYouTubeAPI();
+  }, []);
+
+  return (
+    <>
+      <div className="relative lg:w-2/3 aspect-video group overflow-hidden rounded-2xl lg:self-center shadow-[0_10px_15px_rgba(0,0,0,0.5)] border border-muted border-4">
+        <Plyr
+          source={{
+            type: 'video' as const,
+            sources: [
+              {
+                src: videoId,
+                provider: 'youtube' as const,
+              },
+            ],
+          }}
+          options={{
+            controls: [
+              'play-large',
+              'play',
+              'progress',
+              'current-time',
+              'duration',
+              'mute',
+              'volume',
+              'captions',
+              'pip',
+              'airplay',
+              'fullscreen',
+            ],
+            youtube: {  // youtube config
+              noCookie: true,
+              rel: 0,
+              showinfo: 0,
+              iv_load_policy: 3,
+              modestbranding: 1
+            }
+          }}
+        />
       </div>
-      <ContentBlock className="p-6">
-        <p className="text-dim">{project.desc}</p>
-        {project.quote && <QuoteBlock quote={project.quote} />}
-        {project.stack && <TechStack stack={project.stack} />}
-      </ContentBlock>
-    </div>
-  </>
-);
+      <div className="hidden lg:block lg:w-1/3 bg-foreground-transparent rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.5)] h-fit">
+        <div className="bg-background-transparent p-6 rounded-t-2xl">
+          <Title name={project.name} link={project.link} />
+        </div>
+        <ContentBlock className="p-6">
+          <p className="text-dim">{project.desc}</p>
+          {project.quote && <QuoteBlock quote={project.quote} />}
+          {project.stack && <TechStack stack={project.stack} />}
+        </ContentBlock>
+      </div>
+    </>
+  );
+};
 
 export const ProjectCard = ({ project }: { project: Project }) => (
   <motion.div 
-    className="mb-16 bg-foreground-transparent rounded-2xl shadow-[0_0_15px_rgba(0,0,0,0.2)]"
+    className="mb-16 bg-foreground-transparent rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.5)]"
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5 }}
   >
-    <div className={`${project.video ? 'lg:hidden' : ''} bg-foreground p-8 rounded-t-2xl`}>
+    <div className={`${project.video ? 'lg:hidden' : ''} bg-background-transparent p-8 rounded-t-2xl`}>
       <Title name={project.name} link={project.link} isMobile={true} />
       <Title name={project.name} link={project.link} />
     </div>
     
-    <div className="flex gap-4 px-6 pb-6">
-      <div className={`${project.video ? 'lg:hidden' : ''} w-3 mx-4 rounded-b-2xl bg-foreground`} />
+    <div className="flex gap-4 px-6 pb-10">
+      <div className={`${project.video ? 'lg:hidden' : ''} w-3 mx-4 rounded-b-2xl bg-background-transparent`} />
       <div className="flex-1">
         <div className="flex flex-col lg:flex-row lg:gap-6 pt-6">
           {project.video ? (
             <>
-              <VideoCard project={project} />
+              <ErrorBoundary>
+                <VideoCard project={project} />
+              </ErrorBoundary>
               <ContentBlock className="lg:hidden pt-4">
                 <p className="text-dim">{project.desc}</p>
                 {project.quote && <QuoteBlock quote={project.quote} />}

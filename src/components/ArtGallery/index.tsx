@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Instagram, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import LoadingSpinner from '../LoadingSpinner';
 
 interface Post {
     id: string;
@@ -99,7 +101,7 @@ export default function ArtGallery() {
     }, [selectedPost]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (loading) {
-        return <div className='justify-center items-center flex h-screen'>Loading...</div>;
+        return <LoadingSpinner />;
     }
 
     // tilt effect
@@ -141,28 +143,33 @@ export default function ArtGallery() {
         <>
         {/* Mason Wall Gallery */}
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-theme mb-8">Artwork ✦</h1>
+            <h1 className="text-3xl font-theme mb-8 ml-8">Artwork ✦</h1>
             <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
             {posts.map((post) => (
-                <div 
-                key={post.id} 
-                className="break-inside-avoid mb-4 cursor-pointer group"
+                <motion.div 
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }} 
+                className="bg-foreground-transparent rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.5)] break-inside-avoid mb-4 cursor-pointer group"
                 onClick={() => setSelectedPost(post)}
                 >
-                <div className="relative rounded-lg overflow-hidden">
-                    <Image
-                    src={post.media_url}
-                    alt={post.caption ? removeHashtags(post.caption) : 'Instagram post'}
-                    width={500}
-                    height={500}
-                    className="w-full h-auto transition-all duration-300 
-                        filter grayscale-[30%] contrast-[95%] 
-                        group-hover:grayscale-0 group-hover:contrast-100 
-                        group-hover:scale-105"
-                    priority={false}
-                    />
-                </div>
-                </div>
+                    <div className="relative rounded-lg overflow-hidden">
+                        <Image
+                        src={post.media_url}
+                        alt={post.caption ? removeHashtags(post.caption) : 'Instagram post'}
+                        width={500}
+                        height={500}
+                        draggable={false}
+                        className="w-full h-auto transition-all duration-300 
+                            filter grayscale-[30%] contrast-[95%] 
+                            group-hover:grayscale-0 group-hover:contrast-100 
+                            group-hover:scale-105"
+                        priority={false}
+                        />
+                    </div>
+                </motion.div>
             ))}
             </div>
         </div>
@@ -219,7 +226,11 @@ export default function ArtGallery() {
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Image Container with Tilt and Shimmer */}
-                    <div 
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
                         ref={imageRef}
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeave}
@@ -231,6 +242,7 @@ export default function ArtGallery() {
                             alt={selectedPost.caption || 'Instagram post'}
                             width={1200}
                             height={1200}
+                            draggable={false}
                             className="object-contain max-h-[70vh] w-auto mx-auto rounded-lg"
                             priority
                         />
@@ -250,7 +262,7 @@ export default function ArtGallery() {
                             mixBlendMode: 'overlay',
                             }}
                         />
-                    </div>
+                    </motion.div>
 
                     {/* Caption */}
                     {selectedPost.caption && (

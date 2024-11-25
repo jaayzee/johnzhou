@@ -143,7 +143,7 @@ export default function ProgressBar() {
         </mask>
       </defs>
 
-      <path d={current.shape} fill="#ccc" className="opacity-20"/>
+      <path d={current.shape} fill="var(--dim)" className="opacity-20"/>
       <path d={current.shape} fill="var(--foreground)" filter="url(#glow)" mask="url(#progress-mask)"/>
     </svg>
   );
