@@ -1,4 +1,3 @@
-// components/Logo.tsx
 import React from 'react'
 
 interface LogoProps {
