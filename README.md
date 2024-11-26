@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+<pre>
+                                     ██╗ ██████╗ ██╗  ██╗███╗   ██╗███████╗                                     
+                                     ██║██╔═══██╗██║  ██║████╗  ██║██╔════╝                                     
+                                     ██║██║   ██║███████║██╔██╗ ██║███████╗                                     
+                                ██   ██║██║   ██║██╔══██║██║╚██╗██║╚════██║                                     
+                                ╚█████╔╝╚██████╔╝██║  ██║██║ ╚████║███████║                                     
+                                 ╚════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝                                         
+    ███╗   ███╗ ██████╗ ███╗   ███╗ ██████╗ ██████╗ ███████╗██████╗ ███╗   ██╗      
+    ████╗ ████║██╔═══██╗████╗ ████║██╔═══██╗██╔══██╗██╔════╝██╔══██╗████╗  ██║      
+    ██╔████╔██║██║   ██║██╔████╔██║██║   ██║██║  ██║█████╗  ██████╔╝██╔██╗ ██║      
+    ██║╚██╔╝██║██║   ██║██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ██╔══██╗██║╚██╗██║      
+    ██║ ╚═╝ ██║╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗██║  ██║██║ ╚████║      
+    ╚═╝     ╚═╝ ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝      
+██████╗  ██████╗ ██████╗ ████████╗ ██████╗ ███████╗ ██████╗ ██╗     ██╗ ██████╗ 
+██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔═══██╗██╔════╝██╔═══██╗██║     ██║██╔═══██╗
+██████╔╝██║   ██║██████╔╝   ██║   ██║   ██║█████╗  ██║   ██║██║     ██║██║   ██║
+██╔═══╝ ██║   ██║██╔══██╗   ██║   ██║   ██║██╔══╝  ██║   ██║██║     ██║██║   ██║
+██║     ╚██████╔╝██║  ██║   ██║   ╚██████╔╝██║     ╚██████╔╝███████╗██║╚██████╔╝
+╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝ 
+                                                                                
+-----------------------------------------------------------------
+Testing Grounds
+</pre>
 
-## Getting Started
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+</div>
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# What is this? 😎
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This is the second version of my personal website, **a showcase of my projects and my art**. There's lots of little things that you can interact with, so please give it a try [here](johnzhou.dev). 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Explore my previous website [here](https://jaayzee.github.io/).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# How was this built? 🛠️
 
-To learn more about Next.js, take a look at the following resources:
+This website was designed with heavy influence from the idea of **modern smooth and sleek**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js**: For optimized server-side rendering and seamless routing.
+- **React.js**: To build dynamic and reusable UI components.
+- **Tailwind CSS**: For fast and efficient styling.
+- **TypeScript**: Adding type safety and maintainability.
+- **Three.js**: To create personalized 3D visuals and animations.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> **And deployed with [Vercel](https://vercel.com)!** 🚀
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Key Features 🌟
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Interactive Design**: I wanted much of my website to be played with, and I hope it translates through design.
+- **3D Animations**: Built with Three.js, I wanted something sleek and smooth.
+- **Optimized Performance**: Utilizing Next.js and Tailwind to ensure fast loading and beautiful layouts, though I'm sure I missed optimizations somewhere.
+- **Showcase of Work**: A curated portfolio of my favorite projects and art pieces.
+
+---
+
+# Roadmap 🗺️
+
+### Planned Enhancements:
+- **Additional Animations**: I want to transition my dark and light mode smoothly.
+- **Loading Screen**: Right now the 3D scenes are slower to load than the rest of the website, I'd like to change that.
+- **Optimizations**: The iframe I use to load my resume reloads often, and should be fixed.
+
+---
+
+# About Me 👨‍💻
+
+Hellooo, I’m **John Zhou**, a passionate developer, designer, artist, and student. I’m love everything graphics related and was really into Arcane and Elden Ring around the time of making this ReadME. 
+
+- **Education**: Pursuing a B.S. in Mathematics - Computer Science at UC San Diego and a minor in Engineering Mechanics.
+- **Interests**: Creative programming, 2D/3D art, and web development.
+- **Goal**: To mix/blend art and technology in my work.
+
+---
+
+Thanks for Visiting!  
+  
+**John Zhou**
