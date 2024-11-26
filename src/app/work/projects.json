@@ -1,58 +1,112 @@
-[   
-    {
-        "name": "Eki",
-        "link": "https://devpost.com/software/eki",
-        "desc": "Made a fun little stamping app for CalHacks 2024.",
-        "quote": "Explore the world through the collection of virtual sticker and stamps, with the vast knowledge of the internet by your side.",
-        "video": "https://www.youtube.com/watch?v=dyC0rvYdpEY&ab_channel=AndrewYin",
-        "stack": ["React Native", "Expo", "TypeScript", "Python", "TailwindCSS", "Firebase", "Fast API", "Groq", "Hyperbolic", "Google API", "Figma"]
-    }, {
-        "name": "Qura",
-        "link": "https://devpost.com/software/qura",
-        "desc": "Developed a medication analyzer/detailer app to bring healthcare literacy, awareness, and informed decision making to patients for Ignition Hacks 2024.",
-        "quote": "Mobile application that leverages the power of LLMs and the OpenFDA API to deliver accurate, personalized health information at your fingertips, instantly clearing up any medical doubts.",
-        "video": "https://www.youtube.com/watch?v=FNX_Olc9kl0&ab_channel=AndrewYin",
-        "stack": ["React Native", "Expo", "TypeScript", "TailwindCSS", "Firebase", "FDA API", "Fast API", "OpenAI API", "Figma"]
-    }, {
-        "name": "Meetomate",
-        "link": "",
-        "desc": "A mobile application that helps people schedule in-person meetups through everyday activities to build real interactions. Developed the MVP during the term of my internship.",
-        "stack": ["React Native", "Expo", "TypeScript", "TailwindCSS", "MongoDB", "Figma"]
-    }, {
-        "name": "CryoLog",
-        "link": "https://devpost.com/software/qura",
-        "desc": "Created a grocery scanner that doubles as a dietary coach, recommender, and nutrition summarizer based upon recent eating habits for Streamlit/Snowflake's Hackathon 2024.",
-        "quote": "Revolutionize grocery shopping with personalized lists and dietary advice, streamlining the shopping process and enhancing nutrition awareness.",
-        "video": "https://www.youtube.com/watch?v=wVDommnLwXA&ab_channel=AndrewYin",
-        "stack": ["Snowflake", "Snowflake Arctic", "Python", "FoodData Central API", "Firebase"]
-    }, {
-        "name": "Skimit",
-        "link": "https://devpost.com/software/skim-it",
-        "desc": "Wrote a web app for succinct and concise local/global news in the form of tldrs, in the reddit format for Hacktech 2024.",
-        "quote": "News media app designed to overcome the barriers of short-attention span in social media use through promotion of \"social-media-like\" news posts using LLM integrated summary and title generation.",
-        "video": "https://www.youtube.com/watch?v=VlxGVh_Az3w&ab_channel=Magnolia",
-        "stack": ["React.js", "JavaScript", "Python", "Node.js", "Firebase", "Fast API", "OpenAI API", "News API", "Gemini API", "Figma"]
-    }, {
-        "name": "FeynMind",
-        "link": "https://devpost.com/software/feynmind",
-        "desc": "Made an ML-based studying web app for any subject for my first hackathon, which won!",
-        "quote": "Web application for a guided Feynman Technique process using LLM API integration for feedback and question generation.",
-        "video": "https://www.youtube.com/watch?v=FLKQ0mUCiHM&t=154s&ab_channel=AndrewYin",
-        "stack": ["React.js", "JavaScript", "Node.js", "OpenAI API"]
-    }, {
-        "name": "Cal Poly Pomona Multiple UAVs for Search and Rescue",
-        "link": "",
-        "desc": "Spent a gap quarter working with the Cal Poly UAV team working on radio connection.",
-        "stack": ["Python"]
-    }, {
-        "name": "DECaF",
-        "link": "https://decafucsd.com/",
-        "desc": "Disciplines of Engineering Career Fair is an annual event that connects top engineering students with leading recruiters through networking opportunities, recruiting sessions, and resume feedback.",
-        "stack": ["React.js", "JavaScript", "Node.js", "Sass"]
-    }, {
-        "name": "Engineering on the Green",
-        "link": "https://eotgucsd.com/",
-        "desc": "An annual event held in Fall and Winter quarter where students can network with the various engineering orgs on campus.",
-        "stack": ["React.js", "JavaScript", "Node.js", "Sass"]
-    }
+[
+  {
+    "name": "Eki",
+    "link": "https://devpost.com/software/eki",
+    "desc": "Made a fun little stamping app for CalHacks 2024.",
+    "quote": "Explore the world through the collection of virtual sticker and stamps, with the vast knowledge of the internet by your side.",
+    "video": "https://www.youtube.com/watch?v=dyC0rvYdpEY&ab_channel=AndrewYin",
+    "stack": [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "Python",
+      "TailwindCSS",
+      "Firebase",
+      "Fast API",
+      "Groq",
+      "Hyperbolic",
+      "Google API",
+      "Figma"
+    ]
+  },
+  {
+    "name": "Qura",
+    "link": "https://devpost.com/software/qura",
+    "desc": "Developed a medication analyzer/detailer app to bring healthcare literacy, awareness, and informed decision making to patients for Ignition Hacks 2024.",
+    "quote": "Mobile application that leverages the power of LLMs and the OpenFDA API to deliver accurate, personalized health information at your fingertips, instantly clearing up any medical doubts.",
+    "video": "https://www.youtube.com/watch?v=FNX_Olc9kl0&ab_channel=AndrewYin",
+    "stack": [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "TailwindCSS",
+      "Firebase",
+      "FDA API",
+      "Fast API",
+      "OpenAI API",
+      "Figma"
+    ]
+  },
+  {
+    "name": "Meetomate",
+    "link": "",
+    "desc": "A mobile application that helps people schedule in-person meetups through everyday activities to build real interactions. Developed the MVP during the term of my internship.",
+    "stack": [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "TailwindCSS",
+      "MongoDB",
+      "Figma"
+    ]
+  },
+  {
+    "name": "CryoLog",
+    "link": "https://devpost.com/software/qura",
+    "desc": "Created a grocery scanner that doubles as a dietary coach, recommender, and nutrition summarizer based upon recent eating habits for Streamlit/Snowflake's Hackathon 2024.",
+    "quote": "Revolutionize grocery shopping with personalized lists and dietary advice, streamlining the shopping process and enhancing nutrition awareness.",
+    "video": "https://www.youtube.com/watch?v=wVDommnLwXA&ab_channel=AndrewYin",
+    "stack": [
+      "Snowflake",
+      "Snowflake Arctic",
+      "Python",
+      "FoodData Central API",
+      "Firebase"
+    ]
+  },
+  {
+    "name": "Skimit",
+    "link": "https://devpost.com/software/skim-it",
+    "desc": "Wrote a web app for succinct and concise local/global news in the form of tldrs, in the reddit format for Hacktech 2024.",
+    "quote": "News media app designed to overcome the barriers of short-attention span in social media use through promotion of \"social-media-like\" news posts using LLM integrated summary and title generation.",
+    "video": "https://www.youtube.com/watch?v=VlxGVh_Az3w&ab_channel=Magnolia",
+    "stack": [
+      "React.js",
+      "JavaScript",
+      "Python",
+      "Node.js",
+      "Firebase",
+      "Fast API",
+      "OpenAI API",
+      "News API",
+      "Gemini API",
+      "Figma"
+    ]
+  },
+  {
+    "name": "FeynMind",
+    "link": "https://devpost.com/software/feynmind",
+    "desc": "Made an ML-based studying web app for any subject for my first hackathon, which won!",
+    "quote": "Web application for a guided Feynman Technique process using LLM API integration for feedback and question generation.",
+    "video": "https://www.youtube.com/watch?v=FLKQ0mUCiHM&t=154s&ab_channel=AndrewYin",
+    "stack": ["React.js", "JavaScript", "Node.js", "OpenAI API"]
+  },
+  {
+    "name": "Cal Poly Pomona Multiple UAVs for Search and Rescue",
+    "link": "",
+    "desc": "Spent a gap quarter working with the Cal Poly UAV team working on radio connection.",
+    "stack": ["Python"]
+  },
+  {
+    "name": "DECaF",
+    "link": "https://decafucsd.com/",
+    "desc": "Disciplines of Engineering Career Fair is an annual event that connects top engineering students with leading recruiters through networking opportunities, recruiting sessions, and resume feedback.",
+    "stack": ["React.js", "JavaScript", "Node.js", "Sass"]
+  },
+  {
+    "name": "Engineering on the Green",
+    "link": "https://eotgucsd.com/",
+    "desc": "An annual event held in Fall and Winter quarter where students can network with the various engineering orgs on campus.",
+    "stack": ["React.js", "JavaScript", "Node.js", "Sass"]
+  }
 ]

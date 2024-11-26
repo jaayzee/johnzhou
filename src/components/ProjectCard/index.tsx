@@ -3,8 +3,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Globe, Link as LinkIcon } from 'lucide-react';
-import Plyr from "plyr-react";
-import "plyr-react/plyr.css";
+import Plyr from 'plyr-react';
+import 'plyr-react/plyr.css';
 import ErrorBoundary from './ErrorBoundary';
 import Image from 'next/image';
 
@@ -18,13 +18,22 @@ interface Project {
 }
 
 const getYouTubeVideoId = (url: string) => {
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  const regExp =
+    /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   const match = url.match(regExp);
-  const videoId = (match && match[7]?.length === 11) ? match[7] : null;
+  const videoId = match && match[7]?.length === 11 ? match[7] : null;
   return videoId || 'dQw4w9WgXcQ';
 };
 
-export const Title = ({ name, link, isMobile = false }: { name: string, link?: string, isMobile?: boolean }) => {  
+export const Title = ({
+  name,
+  link,
+  isMobile = false,
+}: {
+  name: string;
+  link?: string;
+  isMobile?: boolean;
+}) => {
   const TitleContent = (
     <h2 className="text-4xl font-black tracking-wider text-foreground flex w-full min-w-0 group-hover:text-destructive transition-colors">
       <span className="flex-shrink-0 whitespace-nowrap">✦&nbsp;</span>
@@ -35,19 +44,21 @@ export const Title = ({ name, link, isMobile = false }: { name: string, link?: s
   return (
     <div className={isMobile ? 'lg:hidden' : 'hidden lg:block w-full'}>
       {link ? (
-        <a 
+        <a
           href={link}
           target="_blank"
           rel="noopener noreferrer"
           className="group flex gap-2 transition-colors w-full"
         >
           {TitleContent}
-          <ExternalLink 
-            className="w-5 h-5 mt-2 text-destructive opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" 
+          <ExternalLink
+            className="w-5 h-5 mt-2 text-destructive opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
             aria-hidden="true"
           />
         </a>
-      ) : TitleContent}
+      ) : (
+        TitleContent
+      )}
     </div>
   );
 };
@@ -55,8 +66,8 @@ export const Title = ({ name, link, isMobile = false }: { name: string, link?: s
 export const TechStack = ({ stack }: { stack: string[] }) => (
   <div className="flex flex-wrap gap-2 mt-4">
     {stack.map((tech, index) => (
-      <span 
-        key={index} 
+      <span
+        key={index}
         className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold"
       >
         {tech}
@@ -68,22 +79,22 @@ export const TechStack = ({ stack }: { stack: string[] }) => (
 export const LinkPreview = ({ url }: { url: string }) => {
   const domain = new URL(url).hostname.replace('www.', '');
   const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-  
+
   return (
-    <a 
+    <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
       className="block mt-4 rounded-xl border-2 border-muted hover:border-destructive transition group overflow-hidden"
     >
       <div className="p-4 flex items-start gap-4">
-        <Image 
-            src={favicon}
-            alt={`${domain} favicon`}
-            width={48}
-            height={48}
-            className="w-12 h-12 rounded-xl group-hover:scale-105 transition-transform duration-500"
-            priority={false}
+        <Image
+          src={favicon}
+          alt={`${domain} favicon`}
+          width={48}
+          height={48}
+          className="w-12 h-12 rounded-xl group-hover:scale-105 transition-transform duration-500"
+          priority={false}
         />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 text-dim group-hover:text-destructive">
@@ -95,8 +106,8 @@ export const LinkPreview = ({ url }: { url: string }) => {
             <span className="truncate">{url}</span>
           </div>
         </div>
-        <ExternalLink 
-          className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-destructive flex-shrink-0" 
+        <ExternalLink
+          className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-destructive flex-shrink-0"
           aria-hidden="true"
         />
       </div>
@@ -104,14 +115,16 @@ export const LinkPreview = ({ url }: { url: string }) => {
   );
 };
 
-export const ContentBlock = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-  <div className={`space-y-4 ${className}`}>
-    {children}
-  </div>
-);
+export const ContentBlock = ({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => <div className={`space-y-4 ${className}`}>{children}</div>;
 
 export const QuoteBlock = ({ quote }: { quote: string }) => (
-  <div className='flex rounded-r-2xl bg-muted'>
+  <div className="flex rounded-r-2xl bg-muted">
     <div className="w-3 flex-shrink-0 bg-dim"></div>
     <p className="text-dim py-2 px-4 italic">{quote}</p>
   </div>
@@ -159,13 +172,14 @@ export const VideoCard = ({ project }: { project: Project }) => {
               'airplay',
               'fullscreen',
             ],
-            youtube: {  // youtube config
+            youtube: {
+              // youtube config
               noCookie: true,
               rel: 0,
               showinfo: 0,
               iv_load_policy: 3,
-              modestbranding: 1
-            }
+              modestbranding: 1,
+            },
           }}
         />
       </div>
@@ -184,20 +198,24 @@ export const VideoCard = ({ project }: { project: Project }) => {
 };
 
 export const ProjectCard = ({ project }: { project: Project }) => (
-  <motion.div 
+  <motion.div
     className="mb-16 bg-foreground-transparent rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.5)]"
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5 }}
   >
-    <div className={`${project.video ? 'lg:hidden' : ''} bg-background-transparent p-8 rounded-t-2xl`}>
+    <div
+      className={`${project.video ? 'lg:hidden' : ''} bg-background-transparent p-8 rounded-t-2xl`}
+    >
       <Title name={project.name} link={project.link} isMobile={true} />
       <Title name={project.name} link={project.link} />
     </div>
-    
+
     <div className="flex gap-4 px-6 pb-10">
-      <div className={`${project.video ? 'lg:hidden' : ''} w-3 mx-4 rounded-b-2xl bg-background-transparent`} />
+      <div
+        className={`${project.video ? 'lg:hidden' : ''} w-3 mx-4 rounded-b-2xl bg-background-transparent`}
+      />
       <div className="flex-1">
         <div className="flex flex-col lg:flex-row lg:gap-6 pt-6">
           {project.video ? (

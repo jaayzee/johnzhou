@@ -8,7 +8,7 @@ const ThemeSwitcher = () => {
   const { theme, setTheme, systemTheme } = useTheme();
   const [isMounted, setIsMounted] = React.useState(false);
   const currentTheme = theme === 'system' ? systemTheme : theme;
-  
+
   // Handle hydration mismatch
   React.useEffect(() => {
     setIsMounted(true);
@@ -34,11 +34,11 @@ const ThemeSwitcher = () => {
                 hover:border-foreground-transparent"
     >
       <div className="relative w-6 h-6">
-        <Sun 
+        <Sun
           className="absolute inset-0 h-6 w-6 rotate-0 scale-100 transition-all duration-300
                      dark:-rotate-90 dark:scale-0 fill-current"
         />
-        <Moon 
+        <Moon
           className="absolute inset-0 h-6 w-6 rotate-90 scale-0 transition-all duration-300
                      dark:rotate-0 dark:scale-100 fill-current"
         />

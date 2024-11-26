@@ -6,11 +6,11 @@ import Lenis from 'lenis';
 
 type ParallaxWrapperProps = {
   children: React.ReactNode;
-}
+};
 
 export default function ParallaxWrapper({ children }: ParallaxWrapperProps) {
   const container = useRef<HTMLDivElement>(null);
-  
+
   // smooth scrolling
   useEffect(() => {
     const lenis = new Lenis();
@@ -30,7 +30,7 @@ export default function ParallaxWrapper({ children }: ParallaxWrapperProps) {
   // parallax effect
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ['start start', 'end start']
+    offset: ['start start', 'end start'],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ['0vh', '50vh']);

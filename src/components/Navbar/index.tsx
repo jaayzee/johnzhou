@@ -22,14 +22,14 @@ const Navbar = () => {
     { label: 'Work', href: '/work' },
     { label: 'Art', href: '/art' },
     { label: 'Resume', href: '/resume' },
-    { label: 'Contact', href: '/contact' }
+    { label: 'Contact', href: '/contact' },
   ];
 
   const isActive = (path: string) => pathname === path;
 
   const renderLogo = () => {
     if (!mounted) return <div className="w-10 h-10" />;
-    
+
     return resolvedTheme === 'dark' ? (
       <LogoSharp className="w-10 h-10 text-foreground hover:text-destructive transition-transform transform hover:rotate-180 duration-500" />
     ) : (

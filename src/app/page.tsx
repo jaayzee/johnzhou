@@ -1,52 +1,84 @@
 import dynamic from 'next/dynamic';
 import Marquee from 'react-fast-marquee';
-import { MousePointerClick, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
-
+import {
+  MousePointerClick,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+} from 'lucide-react';
 
 const Scene = dynamic(() => import('@/components/Scene/index'), {
-    ssr: false,
-})
+  ssr: false,
+});
 
 const SpaceScene = dynamic(() => import('@/components/SpaceScene/index'), {
   ssr: false,
-})
-
-const PolaroidScene = dynamic(() => import('@/components/PolaroidScene/index'), {
-  ssr: false,
-})
-
-const ParallaxWrapper = dynamic(() => import('@/components/Parallax/ParallaxWrapper'), {
-  ssr: false,
 });
 
-const ParallaxSection = dynamic(() => import('@/components/Parallax/ParallaxSection'), {
-  ssr: false
-});
+const PolaroidScene = dynamic(
+  () => import('@/components/PolaroidScene/index'),
+  {
+    ssr: false,
+  }
+);
+
+const ParallaxWrapper = dynamic(
+  () => import('@/components/Parallax/ParallaxWrapper'),
+  {
+    ssr: false,
+  }
+);
+
+const ParallaxSection = dynamic(
+  () => import('@/components/Parallax/ParallaxSection'),
+  {
+    ssr: false,
+  }
+);
 
 const OverlayCards = dynamic(() => import('@/components/OverlayCards'), {
-  ssr: false
+  ssr: false,
 });
 
-const date = new Date()
-const time = date.getHours()
+const date = new Date();
+const time = date.getHours();
 
-const developerSkills = ['React | React Native', 'TypeScript | JavaScript', 'Three.js', 'Python', 'Java', 'C | C++ | C#'];
-const artistSkills = ['Procreate | Clip Studio', 'UI | UX', 'Figma', 'Blender', 'CAD', 'Product Design'];
+const developerSkills = [
+  'React | React Native',
+  'TypeScript | JavaScript',
+  'Three.js',
+  'Python',
+  'Java',
+  'C | C++ | C#',
+];
+const artistSkills = [
+  'Procreate | Clip Studio',
+  'UI | UX',
+  'Figma',
+  'Blender',
+  'CAD',
+  'Product Design',
+];
 
 const DevCard = () => (
   <>
-    <h3 className="text-2xl font-theme bg-background-transparent p-8 rounded-t-2xl">Developer</h3>
+    <h3 className="text-2xl font-theme bg-background-transparent p-8 rounded-t-2xl">
+      Developer
+    </h3>
     <p className="text-dim leading-relaxed p-8">
-      As a developer, I do most of my web dev work in front-end and love fabricating creative, visually-appealing, and intuitive designs of all kinds.
+      As a developer, I do most of my web dev work in front-end and love
+      fabricating creative, visually-appealing, and intuitive designs of all
+      kinds.
     </p>
-    <div className='bg-foreground-transparent rounded-b-2xl'>
+    <div className="bg-foreground-transparent rounded-b-2xl">
       <p className="font-bold text-center p-4">Languages</p>
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent" />
       <div className="flex flex-wrap justify-center gap-2 p-4">
         {developerSkills.map((skill, index) => (
           <span
             key={index}
-            className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold">
+            className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold"
+          >
             {skill}
           </span>
         ))}
@@ -57,20 +89,24 @@ const DevCard = () => (
 
 const ArtistCard = () => (
   <>
-    <h3 className="text-2xl font-theme bg-background-transparent p-8 rounded-t-2xl">Artist</h3>
+    <h3 className="text-2xl font-theme bg-background-transparent p-8 rounded-t-2xl">
+      Artist
+    </h3>
     <p className="text-dim leading-relaxed p-8">
-      As an artist, I work primarily in digital, and while I specialize in 2D work, I also mess around in 3D and VFX.
+      As an artist, I work primarily in digital, and while I specialize in 2D
+      work, I also mess around in 3D and VFX.
     </p>
-    <div className='bg-foreground-transparent rounded-b-2xl'>
+    <div className="bg-foreground-transparent rounded-b-2xl">
       <p className="font-bold text-center p-4">Tools / Skills</p>
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-dim to-transparent" />
       <div className="flex flex-wrap justify-center gap-2 p-4">
         {artistSkills.map((skill, index) => (
           <span
             key={index}
-            className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold">
-          {skill}
-        </span>
+            className="px-4 py-2 rounded-full bg-background text-dim text-sm font-bold"
+          >
+            {skill}
+          </span>
         ))}
       </div>
     </div>
@@ -90,11 +126,8 @@ export default function Home() {
       <div className="w-full bg-background">
         {/* Marquee and Cards */}
         <div className="h-screen flex flex-col">
-          <Marquee 
-            autoFill={true}
-            className='bg-foreground py-2 select-none'
-          >
-            <span className='font-black text-xl text-background'>
+          <Marquee autoFill={true} className="bg-foreground py-2 select-none">
+            <span className="font-black text-xl text-background">
               ✦ 周 加 强&nbsp;
             </span>
           </Marquee>
@@ -102,11 +135,40 @@ export default function Home() {
             <div>
               <h2 className="text-center text-4xl font-bold">
                 Good
-                {time >= 12 ? time >= 16 ? 
-                  <span style={{WebkitTextStroke: '1px var(--foreground-transparent)'}} className="bg-gradient-to-r from-[#f8ceaf] to-[#cbbffd] bg-clip-text text-transparent font-black"> Evening</span> : 
-                  <span style={{WebkitTextStroke: '1px var(--foreground-transparent)'}} className="bg-gradient-to-r from-[#fca344] to-[#55acfa] bg-clip-text text-transparent font-black"> Afternoon</span> : 
-                  <span style={{WebkitTextStroke: '1px var(--foreground-transparent)'}} className="bg-gradient-to-r from-[#fca344] to-[#55acfa] bg-clip-text text-transparent"> Morning</span>
-                }!
+                {time >= 12 ? (
+                  time >= 16 ? (
+                    <span
+                      style={{
+                        WebkitTextStroke: '1px var(--foreground-transparent)',
+                      }}
+                      className="bg-gradient-to-r from-[#f8ceaf] to-[#cbbffd] bg-clip-text text-transparent font-black"
+                    >
+                      {' '}
+                      Evening
+                    </span>
+                  ) : (
+                    <span
+                      style={{
+                        WebkitTextStroke: '1px var(--foreground-transparent)',
+                      }}
+                      className="bg-gradient-to-r from-[#fca344] to-[#55acfa] bg-clip-text text-transparent font-black"
+                    >
+                      {' '}
+                      Afternoon
+                    </span>
+                  )
+                ) : (
+                  <span
+                    style={{
+                      WebkitTextStroke: '1px var(--foreground-transparent)',
+                    }}
+                    className="bg-gradient-to-r from-[#fca344] to-[#55acfa] bg-clip-text text-transparent"
+                  >
+                    {' '}
+                    Morning
+                  </span>
+                )}
+                !
               </h2>
               <h3 className="flex justify-center text-dim text-lg font-semibold">
                 I&apos;m John, and I&apos;m a(n) ...
@@ -120,8 +182,11 @@ export default function Home() {
             </div>
             <div className="flex justify-center">
               <p className="text-dim leading-relaxed max-w-2xl text-center mt-9 mb-8 xs:mt-0">
-                I&apos;m currently pursuing my BS in <strong>Mathematics|Computer Science</strong> at the <strong>University of California, San Diego</strong>,
-                and will be graduating March of 2025 with a minor in <strong>Engineering Mechanics</strong>.
+                I&apos;m currently pursuing my BS in{' '}
+                <strong>Mathematics|Computer Science</strong> at the{' '}
+                <strong>University of California, San Diego</strong>, and will
+                be graduating March of 2025 with a minor in{' '}
+                <strong>Engineering Mechanics</strong>.
               </p>
             </div>
           </div>
@@ -130,16 +195,16 @@ export default function Home() {
         {/* Star Field */}
         <div>
           <ParallaxSection scene={<SpaceScene />}>
-            <div className='select-none relative z-10 w-full h-full flex flex-col justify-between pointer-events-none'>
-              <div className='ml-auto bg-background-transparent backdrop-blur-sm my-5 pl-5 pr-10 py-5 rounded-l-xl'>
-                <p className='flex space-x-4 text-foreground'>
+            <div className="select-none relative z-10 w-full h-full flex flex-col justify-between pointer-events-none">
+              <div className="ml-auto bg-background-transparent backdrop-blur-sm my-5 pl-5 pr-10 py-5 rounded-l-xl">
+                <p className="flex space-x-4 text-foreground">
                   <ChevronLeft />
                   <MousePointerClick />
                   <ChevronRight />
                 </p>
               </div>
-              <div className='mr-auto bg-background-transparent backdrop-blur-sm my-5 px-20 py-10 rounded-r-xl'>
-                <p className='font-theme text-foreground text-[4vh]'>
+              <div className="mr-auto bg-background-transparent backdrop-blur-sm my-5 px-20 py-10 rounded-r-xl">
+                <p className="font-theme text-foreground text-[4vh]">
                   Snapshots
                 </p>
               </div>
@@ -148,7 +213,7 @@ export default function Home() {
         </div>
 
         {/* Polaroids */}
-        <div className='h-screen overflow-clip overflow-y-visible'>
+        <div className="h-screen overflow-clip overflow-y-visible">
           <PolaroidScene />
         </div>
       </div>
