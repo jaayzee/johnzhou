@@ -11,6 +11,7 @@ interface PhotoData {
   src: string
   caption?: string
   position: { x: number; y: number; rotate: number }
+  priority?: boolean
 }
 
 const photos: PhotoData[] = [
@@ -18,7 +19,8 @@ const photos: PhotoData[] = [
     id: 'climb',
     src: '/medias/photos/climb.jpg',
     caption: 'sky high',
-    position: { x: 0.6, y: 0.35, rotate: 3 }
+    position: { x: 0.6, y: 0.35, rotate: 3 },
+    priority: true
   },
   {
     id: 'fitty',
@@ -30,25 +32,29 @@ const photos: PhotoData[] = [
     id: 'mount',
     src: '/medias/photos/mount.jpg',
     caption: 'brain hurty',
-    position: { x: 0.0, y: 0.35, rotate: 20 }
+    position: { x: 0.0, y: 0.35, rotate: 20 },
+    priority: true
   },
   {
     id: 'slaves',
     src: '/medias/photos/slaves.jpg',
     caption: 'work work work work work',
-    position: { x: 0.35, y: 0.4, rotate: 25 }
+    position: { x: 0.35, y: 0.4, rotate: 25 },
+    priority: true
   },
   {
     id: 'lab',
     src: '/medias/photos/lab.jpg',
     caption: 'lithium poisoning',
-    position: { x: 0.4, y: -0.05, rotate: 10 }
+    position: { x: 0.4, y: -0.05, rotate: 10 },
+    priority: true
   },
   {
     id: 'little',
     src: '/medias/photos/little.jpg',
     caption: 'wahahaha',
-    position: { x: 0.0, y: 0.6, rotate: 5 }
+    position: { x: 0.0, y: 0.6, rotate: 5 },
+    priority: true
   },
   {
     id: 'young',
@@ -153,7 +159,15 @@ const PolaroidComponent: React.FC<PolaroidProps> = ({ photo, containerSize, init
         }}
       >
         <div className="relative pointer-events-none" style={{ width: dimensions.width, height: dimensions.height }}>
-          <Image src={photo.src} alt={photo.caption || ''} fill className="object-cover" draggable={false} />
+          <Image 
+            src={photo.src} 
+            alt={photo.caption || ''} 
+            fill 
+            className="object-cover" 
+            draggable={false} 
+            loading='lazy'
+            sizes="(max-width: 300px) 100vw, 300px"
+            />
         </div>
         {photo.caption && (
           <div className="mt-4 text-xl text-center font-bulgatti text-foreground relative z-30">{photo.caption}</div>
@@ -201,9 +215,9 @@ export default function PolaroidScene() {
     }, [])
   
     return (
-      <div className='h-screen'>
+      <div className='h-screen relative'>
         <div id="polaroid-container" className="w-full h-full relative">
-          <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 z-0 pointer-events-none relative">
             <p className="select-none absolute bg-foreground p-10 left-12 text-2xl rounded-b-2xl text-background font-theme shadow-[0_10px_15px_rgba(0,0,0,0.3)]">
               Place anywhere
             </p>

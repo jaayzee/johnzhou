@@ -4,7 +4,7 @@ interface LogoProps {
   className?: string
 }
 
-const Logo: React.FC<LogoProps> = ({ className }) => {
+const LogoGoop: React.FC<LogoProps> = ({ className }) => {
     return (
         <svg
         width="200"
@@ -49,4 +49,4 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
     )
 }
 
-export default Logo
+export default LogoGoop

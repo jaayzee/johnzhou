@@ -6,14 +6,16 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Mesh, Color } from 'three';
 // import { useControls } from 'leva';
 
+useGLTF.preload("/medias/star.glb");
+
 export default function Model() {
     const { nodes } = useGLTF("/medias/star.glb");
     const { viewport } = useThree();
     const star = useRef<Mesh>(null);
     
-    const [bgColor, setBgColor] = useState(new Color(getComputedStyle(document.documentElement).getPropertyValue('--background')));
-    const [textColor, setTextColor] = useState(new Color(getComputedStyle(document.documentElement).getPropertyValue('--foreground')));
-    const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
+    const [bgColor, setBgColor] = useState(new Color('#ffffff'));
+    const [textColor, setTextColor] = useState(new Color('#000000'));
+    const [isDarkMode, setIsDarkMode] = useState(true);
 
     useEffect(() => {
         const updateColors = () => {
@@ -31,7 +33,6 @@ export default function Model() {
 
         // watch for theme changes
         const observer = new MutationObserver(updateColors);
-
         observer.observe(document.documentElement, {
             attributes: true,
             attributeFilter: ['class']
