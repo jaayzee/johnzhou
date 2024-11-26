@@ -217,7 +217,7 @@ export default function PolaroidScene() {
     return (
       <div className='h-screen relative'>
         <div id="polaroid-container" className="w-full h-full relative">
-          <div className="absolute inset-0 z-0 pointer-events-none relative">
+          <div className="absolute inset-0 z-0 pointer-events-none">
             <p className="select-none absolute bg-foreground p-10 left-12 text-2xl rounded-b-2xl text-background font-theme shadow-[0_10px_15px_rgba(0,0,0,0.3)]">
               Place anywhere
             </p>
