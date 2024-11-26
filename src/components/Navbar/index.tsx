@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
@@ -9,8 +9,13 @@ import LogoGoop from '../../../public/medias/LogoGoop';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -21,7 +26,16 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => pathname === path;
-  const LogoComponent = resolvedTheme === 'dark' ? LogoSharp : LogoGoop;
+
+  const renderLogo = () => {
+    if (!mounted) return <div className="w-10 h-10" />;
+    
+    return resolvedTheme === 'dark' ? (
+      <LogoSharp className="w-10 h-10 text-foreground hover:text-destructive transition-transform transform hover:rotate-180 duration-500" />
+    ) : (
+      <LogoGoop className="w-10 h-10 text-foreground hover:text-destructive transition-transform transform hover:rotate-180 duration-500" />
+    );
+  };
 
   return (
     <nav className="select-none bg-background-transparent backdrop-blur-sm fixed w-full z-50">
@@ -30,7 +44,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold">
-              <LogoComponent className="w-10 h-10 text-foreground hover:text-destructive transition-transform transform hover:rotate-180 duration-500"/>
+              {renderLogo()}
             </Link>
           </div>
 

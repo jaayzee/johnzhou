@@ -1,15 +1,30 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber'
+import { memo } from 'react';
+import { Canvas } from '@react-three/fiber';
 import Model from './Model';
-import { Environment } from '@react-three/drei'
+import { Environment } from '@react-three/drei';
 
-export default function Index() {
+const SceneContent = memo(function SceneContent() {
   return (
-    <Canvas style={{background: 'var(--background)'}}>
-        <Model />
-        <directionalLight intensity={2} position={[0, 2, 3]}/>
-        <Environment preset="city" />
+    <>
+      <Model />
+      <directionalLight intensity={2} position={[0, 2, 3]}/>
+      <Environment preset="city" />
+    </>
+  );
+});
+
+function Scene() {
+  return (
+    <Canvas
+      style={{background: 'var(--background)'}}
+      performance={{ min: 0.5 }}
+      dpr={[1, 2]}
+    >
+      <SceneContent />
     </Canvas>
-  )
+  );
 }
+
+export default Scene;

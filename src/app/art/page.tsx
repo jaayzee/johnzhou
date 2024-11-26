@@ -1,9 +1,12 @@
 import dynamic from 'next/dynamic';
 import ArtGallery from '@/components/ArtGallery';
 
-const SmoothScroll = dynamic(() => import('@/components/Parallax/SmoothScroll'), {
-  ssr: false,
-});
+const SmoothScroll = dynamic(
+  () => import('@/components/Parallax/SmoothScroll'),
+  {
+    ssr: false,
+  }
+);
 
 export default function ArtPage() {
   return (

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import Image from 'next/image'
 import { motion, useMotionValue } from 'framer-motion'
 import Crying from '/public/medias/crying.svg'
@@ -114,6 +114,30 @@ function useImageDimensions(src: string): { width: number; height: number } | un
   return dimensions
 }
 
+function useContainerSize(containerId: string) {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const updateSize = () => {
+      setSize({
+        width: container.offsetWidth,
+        height: container.offsetHeight
+      });
+    };
+
+    const resizeObserver = new ResizeObserver(updateSize);
+    resizeObserver.observe(container);
+    updateSize();
+
+    return () => resizeObserver.disconnect();
+  }, [containerId]);
+
+  return size;
+}
+
 interface PolaroidProps {
   photo: PhotoData
   containerSize: { width: number; height: number }
@@ -121,7 +145,7 @@ interface PolaroidProps {
   getTopZIndex: () => number
 }
 
-const PolaroidComponent: React.FC<PolaroidProps> = ({ photo, containerSize, initialZIndex, getTopZIndex }) => {
+const PolaroidComponent = React.memo(function PolaroidComponent({ photo, containerSize, initialZIndex, getTopZIndex }: PolaroidProps) {
   const x = useMotionValue(photo.position.x * containerSize.width)
   const y = useMotionValue(photo.position.y * containerSize.height)
   const [zIndex, setZIndex] = useState<number>(initialZIndex)
@@ -129,7 +153,7 @@ const PolaroidComponent: React.FC<PolaroidProps> = ({ photo, containerSize, init
   useEffect(() => {
     x.set(photo.position.x * containerSize.width)
     y.set(photo.position.y * containerSize.height)
-  }, [containerSize, photo.position.x, photo.position.y, x, y])
+  }, [containerSize.width, containerSize.height, photo.position.x, photo.position.y, x, y])
 
   const handleDragStart = useCallback(() => {
     setZIndex(getTopZIndex())
@@ -142,7 +166,8 @@ const PolaroidComponent: React.FC<PolaroidProps> = ({ photo, containerSize, init
     <motion.div
       className="absolute select-none cursor-grab active:cursor-grabbing"
       style={{ x, y, rotate: photo.position.rotate, zIndex }}
-      drag dragMomentum={false}
+      drag 
+      dragMomentum={false}
       whileHover={{ scale: 1.02 }}
       whileDrag={{ scale: 1.1 }}
       onDragStart={handleDragStart}
@@ -165,76 +190,56 @@ const PolaroidComponent: React.FC<PolaroidProps> = ({ photo, containerSize, init
             fill 
             className="object-cover" 
             draggable={false} 
-            loading='lazy'
+            loading={photo.priority ? 'eager' : 'lazy'}
             sizes="(max-width: 300px) 100vw, 300px"
-            />
+          />
         </div>
         {photo.caption && (
-          <div className="mt-4 text-xl text-center font-bulgatti text-foreground relative z-30">{photo.caption}</div>
+          <div className="mt-4 text-xl text-center font-bulgatti text-foreground relative z-30">
+            {photo.caption}
+          </div>
         )}
       </div>
     </motion.div>
   )
+});
+
+function PolaroidScene() {
+  const zIndexRef = useRef(photos.length);
+  const getTopZIndex = useCallback(() => {
+    zIndexRef.current += 1;
+    return zIndexRef.current;
+  }, []);
+
+  const containerSize = useContainerSize('polaroid-container');
+
+  const memoizedPolaroids = useMemo(() => 
+    photos.map((photo, i) => (
+      <PolaroidComponent
+        key={photo.id}
+        photo={photo}
+        containerSize={containerSize}
+        initialZIndex={i}
+        getTopZIndex={getTopZIndex}
+      />
+    )),
+    [containerSize, getTopZIndex]
+  );
+
+  return (
+    <div className='h-screen relative'>
+      <div id="polaroid-container" className="w-full h-full relative">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <p className="select-none absolute bg-foreground p-10 left-12 text-2xl rounded-b-2xl text-background font-theme shadow-[0_10px_15px_rgba(0,0,0,0.3)]">
+            Place anywhere
+          </p>
+          <Crying className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 dark:hidden" />
+          <Kissing className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 hidden dark:block fill-foreground" />
+        </div>
+        {memoizedPolaroids}
+      </div>
+    </div>
+  );
 }
 
-const Polaroid = React.memo(PolaroidComponent)
-
-export default function PolaroidScene() {
-    const zIndexRef = useRef(photos.length)
-    const getTopZIndex = useCallback(() => {
-      zIndexRef.current += 1
-      return zIndexRef.current
-    }, [])
-  
-    const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
-  
-    useEffect(() => {
-      const container = document.getElementById('polaroid-container')
-      if (container) {
-        setContainerSize({
-          width: container.offsetWidth,
-          height: container.offsetHeight
-        })
-      }
-      const resizeObserver = new ResizeObserver(() => {
-        if (container) {
-          setContainerSize({
-            width: container.offsetWidth,
-            height: container.offsetHeight
-          })
-        }
-      })
-      if (container) {
-        resizeObserver.observe(container)
-      }
-      return () => {
-        if (container) {
-          resizeObserver.unobserve(container)
-        }
-      }
-    }, [])
-  
-    return (
-      <div className='h-screen relative'>
-        <div id="polaroid-container" className="w-full h-full relative">
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <p className="select-none absolute bg-foreground p-10 left-12 text-2xl rounded-b-2xl text-background font-theme shadow-[0_10px_15px_rgba(0,0,0,0.3)]">
-              Place anywhere
-            </p>
-            <Crying className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 dark:hidden" />
-            <Kissing className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 hidden dark:block fill-foreground" />
-          </div>
-    
-          {photos.map((photo, i) => (
-            <Polaroid
-              key={photo.id}
-              photo={photo}
-              containerSize={containerSize}
-              initialZIndex={i}
-              getTopZIndex={getTopZIndex}
-            />
-          ))}
-        </div>
-      </div>
-    )
-  }
+export default PolaroidScene;

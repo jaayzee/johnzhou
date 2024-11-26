@@ -119,8 +119,7 @@ export default function ProgressBar() {
   const current = resolvedTheme === 'dark' ? paths.dark : paths.light;
 
   return (
-    <svg viewBox="0 0 92 294" className="w-full h-full" preserveAspectRatio="none">
-      <defs>
+      <svg viewBox="0 0 92 294" className="w-full h-auto max-h-[500px]" preserveAspectRatio="xMidYMid meet">      <defs>
         <filter id="glow">
           <feGaussianBlur stdDeviation="0.5" result="coloredBlur"/>
           <feMerge>
