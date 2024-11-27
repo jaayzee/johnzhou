@@ -78,6 +78,17 @@ Hellooo, I’m **John Zhou**, a passionate developer, designer, artist, and stud
 
 ---
 
+# Acknowledgements 🤓
+
+Thanks to everyone that gave me suggestions and pointers, they were very crucial to the intiutiveness and feel of the website :>> 
+
+- [Angie](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley)
+- [Ethan Schwartzman](https://github.com/Ethan-Schwartzman)
+- [Ivy](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley)
+- [Jasmine Vodhanel](https://github.com/jvodhanel)
+
+---
+
 Thanks for Visiting!  
   
 **John Zhou**
