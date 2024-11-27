@@ -2,7 +2,6 @@
 
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { sendEmail } from '@/app/utils/send-email';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
@@ -19,9 +18,17 @@ interface FormData {
 }
 
 const Contact: FC = () => {
-  const { register, handleSubmit, reset } = useForm<FormData>({
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      message: '',
+    },
   });
 
   const [buttonState, setButtonState] = useState<
@@ -29,21 +36,25 @@ const Contact: FC = () => {
   >('idle');
 
   const onSubmit = async (data: FormData) => {
-    if (data.message.length < 10) {
-      alert('Message must be at least 10 characters');
-      return;
-    }
-
     setButtonState('loading');
 
     try {
-      const response = await sendEmail(data);
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
       if (response.ok) {
         setButtonState('success');
         reset();
         setTimeout(() => setButtonState('idle'), 2000);
       } else {
-        throw new Error('Failed to send message');
+        throw new Error(result.details || 'Failed to send message');
       }
     } catch (error) {
       console.error('Error sending email:', error);
@@ -103,19 +114,45 @@ const Contact: FC = () => {
               <div className="space-y-6 p-6">
                 <div>
                   <input
-                    {...register('email', { required: true })}
+                    {...register('email', {
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: 'Invalid email address',
+                      },
+                    })}
                     type="email"
                     placeholder="Enter your email"
-                    className="w-full font-bold px-4 py-2 bg-transparent border-b-2 border-dim focus:border-b-4 focus:border-destructive rounded-none focus:outline-none transition-all placeholder:text-dim"
+                    className={`w-full font-bold px-4 py-2 bg-transparent border-b-2 border-dim focus:border-b-4 focus:border-destructive rounded-none focus:outline-none transition-all placeholder:text-dim ${
+                      errors.email ? 'border-red-500' : ''
+                    }`}
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <textarea
-                    {...register('message', { required: true, minLength: 10 })}
+                    {...register('message', {
+                      required: 'Message is required',
+                      minLength: {
+                        value: 10,
+                        message: 'Message must be at least 10 characters',
+                      },
+                    })}
                     placeholder="Leave a message :)"
                     rows={4}
-                    className="w-full font-bold px-4 py-2 bg-transparent border-2 border-dim rounded-md focus:border-4 focus:border-destructive focus:outline-none transition-all placeholder:text-dim"
+                    className={`w-full font-bold px-4 py-2 bg-transparent border-2 border-dim rounded-md focus:border-4 focus:border-destructive focus:outline-none transition-all placeholder:text-dim ${
+                      errors.message ? 'border-red-500' : ''
+                    }`}
                   ></textarea>
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.message.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="bg-background-transparent rounded-b-3xl space-y-6 py-6">

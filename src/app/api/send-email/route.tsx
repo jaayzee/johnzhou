@@ -9,6 +9,7 @@ interface EmailData {
 
 interface EmailError {
   message?: string;
+  stack?: string;
   code?: string;
   response?: string;
 }
@@ -17,18 +18,27 @@ export async function POST(request: Request) {
   try {
     const { email, message }: EmailData = await request.json();
 
+    // Validate environment variables
+    const myEmail = process.env.MY_EMAIL;
+    const myPassword = process.env.MY_PASSWORD;
+
+    if (!myEmail || !myPassword) {
+      throw new Error('Missing email configuration');
+    }
+
     const transport = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
+      service: 'gmail', // Using 'service' instead of 'host'
       auth: {
-        user: process.env.MY_EMAIL,
-        pass: process.env.MY_PASSWORD,
+        user: myEmail,
+        pass: myPassword,
       },
     });
 
+    // Verify transport configuration
+    await transport.verify();
+
     const mailOptions: Mail.Options = {
-      from: process.env.MY_EMAIL,
+      from: myEmail,
       to: 'jozo20020410@gmail.com',
       subject: `Message from ${email}`,
       text: message,
@@ -42,11 +52,19 @@ export async function POST(request: Request) {
       `,
     };
 
-    await transport.sendMail(mailOptions);
+    const info = await transport.sendMail(mailOptions);
+    console.log('Message sent: %s', info.messageId);
+
     return NextResponse.json({ message: 'Email sent successfully' });
   } catch (err) {
     const error = err as EmailError;
-    console.error('Detailed error:', error);
+    console.error('Detailed error:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      response: error.response,
+    });
+
     return NextResponse.json(
       {
         error: 'Failed to send email',
