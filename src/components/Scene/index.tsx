@@ -1,10 +1,11 @@
 'use client';
 
-import { memo, Suspense } from 'react';
+import { memo, Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Model from './Model';
 import { Environment } from '@react-three/drei';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import LoadingSpinner from '../LoadingSpinner';
 
 const SceneContent = memo(function SceneContent() {
   return (
@@ -16,11 +17,23 @@ const SceneContent = memo(function SceneContent() {
   );
 });
 
-function FallbackComponent({ error }: FallbackProps) {
-  console.error('Scene/index Fallback Error:', error);
+function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
+  useEffect(() => {
+    // attempt to reset after 1 seconds
+    const timer = setTimeout(() => {
+      resetErrorBoundary();
+      // if reset doesn't work, force a page reload
+      if (error) {
+        window.location.reload();
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [error, resetErrorBoundary]);
+
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <p>Loading 3D scene...</p>
+      <LoadingSpinner />
     </div>
   );
 }
@@ -31,7 +44,11 @@ function Scene() {
       <ErrorBoundary
         FallbackComponent={FallbackComponent}
         onReset={() => {
-          // reset any state if needed
+          // reset the state of your app here if needed
+          console.log('Error boundary reset');
+        }}
+        onError={(error) => {
+          console.error('Scene Error:', error);
         }}
       >
         <Canvas
