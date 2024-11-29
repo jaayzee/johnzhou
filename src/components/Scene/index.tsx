@@ -17,6 +17,7 @@ const SceneContent = memo(function SceneContent() {
 });
 
 function FallbackComponent({ error }: FallbackProps) {
+  console.error('Scene/index Fallback Error:', error);
   return (
     <div className="w-full h-full flex items-center justify-center">
       <p>Loading 3D scene...</p>
@@ -30,7 +31,7 @@ function Scene() {
       <ErrorBoundary
         FallbackComponent={FallbackComponent}
         onReset={() => {
-          // Reset any state if needed
+          // reset any state if needed
         }}
       >
         <Canvas
