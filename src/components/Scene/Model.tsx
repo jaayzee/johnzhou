@@ -1,17 +1,26 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import {
   PresentationControls,
   MeshTransmissionMaterial,
   useGLTF,
   Text,
+  useProgress,
 } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Mesh, Color } from 'three';
 // import { useControls } from 'leva';
 
-useGLTF.preload('/medias/star.glb');
+const preloadModel = () => {
+  try {
+    useGLTF.preload('/medias/star.glb');
+  } catch (error) {
+    console.error('Failed to preload model:', error);
+  }
+};
+
+preloadModel();
 
 export default function Model() {
   const { nodes } = useGLTF('/medias/star.glb');
@@ -21,26 +30,39 @@ export default function Model() {
   const [bgColor, setBgColor] = useState(new Color('#ffffff'));
   const [textColor, setTextColor] = useState(new Color('#000000'));
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isModelReady, setIsModelReady] = useState(false);
+
+  const { progress } = useProgress();
 
   useEffect(() => {
-    const updateColors = () => {
+    if (progress === 100) {
+      setIsModelReady(true);
+    }
+  }, [progress]);
+
+  const updateColors = useCallback(() => {
+    try {
       const newBgColor = new Color(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          '--background'
-        )
+        getComputedStyle(document.documentElement)
+          .getPropertyValue('--background')
+          .trim()
       );
       const newTextColor = new Color(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          '--foreground'
-        )
+        getComputedStyle(document.documentElement)
+          .getPropertyValue('--foreground')
+          .trim()
       );
       const newIsDarkMode = document.documentElement.classList.contains('dark');
 
       setBgColor(newBgColor);
       setTextColor(newTextColor);
       setIsDarkMode(newIsDarkMode);
-    };
+    } catch (error) {
+      console.error('Error updating colors:', error);
+    }
+  }, []);
 
+  useEffect(() => {
     // run initially
     updateColors();
 
@@ -64,7 +86,7 @@ export default function Model() {
       observer.disconnect();
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [updateColors]);
 
   // mesh transmission controls
   // const materialProps = useControls({
@@ -86,12 +108,16 @@ export default function Model() {
   };
 
   // mesh auto-rotation
-  useFrame(({}) => {
-    if (star.current) {
+  useFrame(() => {
+    if (star.current && isModelReady) {
       star.current.rotation.y += 0.005;
       star.current.rotation.z += 0.005;
     }
   });
+
+  if (!nodes?.star) {
+    return null;
+  }
 
   return (
     <group>
