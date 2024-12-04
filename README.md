@@ -86,7 +86,7 @@ Thanks to everyone that gave me suggestions and pointers, they were very crucial
 - [Ethan Schwartzman](https://github.com/Ethan-Schwartzman)
 - [Ivy](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley)
 - [Jasmine Vodhanel](https://github.com/jvodhanel)
-- [Olivier Larose](https://www.youtube.com/@olivierlarose1)
+- [Olivier Larose](https://www.youtube.com/@olivierlarose1) (Lots of inspiration from this channel :))
 
 ---
 
