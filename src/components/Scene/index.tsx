@@ -31,11 +31,7 @@ function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
     return () => clearTimeout(timer);
   }, [error, resetErrorBoundary]);
 
-  return (
-    <div className="w-full h-full flex items-center justify-center">
-      <LoadingSpinner />
-    </div>
-  );
+  return <LoadingSpinner />;
 }
 
 function Scene() {
