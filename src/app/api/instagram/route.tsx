@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+// holy moly a few days after I pushed to live on Dec 4, 2024, Meta deprecated Instagram Basic Display API
+// switched over to Instagram Graph API today
+
 // refresh token regularly
 async function refreshToken(token: string) {
   const response = await fetch(
