@@ -112,7 +112,7 @@ const Contact: FC = () => {
               onSubmit={handleSubmit(onSubmit)}
             >
               <div className="space-y-6 p-6">
-                <div>
+                <div className="group">
                   <input
                     {...register('email', {
                       required: 'Email is required',
@@ -123,17 +123,17 @@ const Contact: FC = () => {
                     })}
                     type="email"
                     placeholder="Enter your email"
-                    className={`w-full font-bold px-4 py-2 bg-transparent border-b-2 border-dim focus:border-b-4 focus:border-destructive rounded-none focus:outline-none transition-all placeholder:text-dim ${
+                    className={`w-full font-bold px-4 py-2 bg-transparent border-b-2 border-dim focus:border-b-4 focus:border-destructive rounded-none outline-none transition-all placeholder:text-dim ${
                       errors.email ? 'border-destructive' : ''
                     }`}
                   />
                   {errors.email && (
-                    <p className="py-1 text-sm font-bold text-destructive text-center bg-background-transparent rounded-b">
+                    <p className="py-1 text-sm font-bold group-focus-within:bg-destructive text-muted text-center bg-dim rounded-b">
                       {errors.email.message}
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="group">
                   <textarea
                     {...register('message', {
                       required: 'Message is required',
@@ -144,14 +144,14 @@ const Contact: FC = () => {
                     })}
                     placeholder="Leave a message :)"
                     rows={4}
-                    className={`w-full font-bold px-4 py-2 bg-transparent border-2 border-dim focus:border-4 focus:border-destructive focus:outline-none transition-all placeholder:text-dim ${
+                    className={`w-full font-bold px-4 py-2 bg-transparent border-2 border-dim focus:border-4 focus:border-destructive outline-none transition-all placeholder:text-dim ${
                       errors.message
                         ? 'border-destructive rounded-t'
                         : 'rounded-md'
                     }`}
                   />
                   {errors.message && (
-                    <p className="-mt-2 py-1 text-sm font-bold text-destructive text-center bg-background-transparent rounded-b">
+                    <p className="-mt-2 py-1 text-sm font-bold group-focus-within:bg-destructive text-muted text-center bg-dim rounded-b">
                       {errors.message.message}
                     </p>
                   )}
