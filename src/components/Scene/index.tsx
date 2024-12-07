@@ -40,7 +40,7 @@ function Scene() {
       <ErrorBoundary
         FallbackComponent={FallbackComponent}
         onReset={() => {
-          // reset the state of your app here if needed
+          // reset state
           console.log('Error boundary reset');
         }}
         onError={(error) => {
