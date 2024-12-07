@@ -46,7 +46,7 @@
     --accent: #f5f5f5;
     --accent-foreground: #171717;
 
-    --destructive: #4a6fa5;
+    --destructive: #5c87f0; /* jinx dark powder blue */
     --destructive-foreground: #ffffff;
 
     --dim: #43454d;
@@ -83,7 +83,7 @@
     --accent: #363636;
     --accent-foreground: #ededed;
 
-    --destructive: #ff3d00;
+    --destructive: #de5048; /* vi punch pink */
     --destructive-foreground: #ededed;
 
     --dim: #919191;

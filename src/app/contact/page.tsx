@@ -124,11 +124,11 @@ const Contact: FC = () => {
                     type="email"
                     placeholder="Enter your email"
                     className={`w-full font-bold px-4 py-2 bg-transparent border-b-2 border-dim focus:border-b-4 focus:border-destructive rounded-none focus:outline-none transition-all placeholder:text-dim ${
-                      errors.email ? 'border-red-500' : ''
+                      errors.email ? 'border-destructive' : ''
                     }`}
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-500">
+                    <p className="py-1 text-sm font-bold text-destructive text-center bg-background-transparent rounded-b">
                       {errors.email.message}
                     </p>
                   )}
@@ -144,12 +144,14 @@ const Contact: FC = () => {
                     })}
                     placeholder="Leave a message :)"
                     rows={4}
-                    className={`w-full font-bold px-4 py-2 bg-transparent border-2 border-dim rounded-md focus:border-4 focus:border-destructive focus:outline-none transition-all placeholder:text-dim ${
-                      errors.message ? 'border-red-500' : ''
+                    className={`w-full font-bold px-4 py-2 bg-transparent border-2 border-dim focus:border-4 focus:border-destructive focus:outline-none transition-all placeholder:text-dim ${
+                      errors.message
+                        ? 'border-destructive rounded-t'
+                        : 'rounded-md'
                     }`}
-                  ></textarea>
+                  />
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-500">
+                    <p className="-mt-2 py-1 text-sm font-bold text-destructive text-center bg-background-transparent rounded-b">
                       {errors.message.message}
                     </p>
                   )}
