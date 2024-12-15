@@ -104,7 +104,7 @@ const Contact: FC = () => {
           className="container mx-auto px-4 py-16 h-full flex flex-col items-center"
         >
           <div className="pt-10 bg-foreground-transparent rounded-3xl shadow-[0_10px_15px_rgba(0,0,0,0.5)] h-fit">
-            <h1 className="text-4xl px-20 text-center font-theme mb-12 text-foreground">
+            <h1 className="text-3xl px-20 text-center font-theme mb-12 text-nowrap text-foreground">
               Reach Me
             </h1>
             <form

@@ -14,7 +14,7 @@ export default function Resume() {
           transition={{ duration: 0.5 }}
           className="container mx-auto px-4 py-8 h-full"
         >
-          <h1 className="text-3xl font-theme mb-8 ml-8 text-foreground">
+          <h1 className="text-3xl font-theme mb-12 ml-8 text-foreground">
             Resume ✦
           </h1>
           <iframe

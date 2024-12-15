@@ -32,7 +32,7 @@ const Content = () => {
   ];
 
   return (
-    <div className="w-full h-full bg-destructive p-4">
+    <div className="w-full h-full bg-destructive p-8">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-3 gap-8 mb-8">
           {/* About */}

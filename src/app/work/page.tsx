@@ -16,14 +16,14 @@ export default function Work() {
         transition={{ duration: 0.5 }}
         className="container mx-auto px-4 py-8"
       >
-        <div className="lg:hidden mb-8">
+        <div className="lg:hidden mb-12">
           <h1 className="text-3xl font-theme text-foreground">Work ✦</h1>
         </div>
 
         <div className="flex relative">
           <div className="hidden lg:block w-[200px] flex-shrink-0">
             <div className="fixed w-[200px] h-[calc(100vh-200px)]">
-              <h1 className="text-3xl font-theme mb-8 text-center text-foreground">
+              <h1 className="text-3xl font-theme mb-12 text-center text-foreground">
                 Work ✦
               </h1>
               <ProgressBar />

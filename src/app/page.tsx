@@ -122,7 +122,10 @@ export default function Home() {
       <div className="w-full bg-background">
         {/* Marquee and Cards */}
         <div className="h-screen flex flex-col">
-          <Marquee autoFill={true} className="bg-foreground py-2 select-none">
+          <Marquee
+            autoFill={true}
+            className="bg-foreground py-4 sm:py-2 select-none"
+          >
             <span className="font-black text-xl text-background">
               ✦ 周 加 强&nbsp;
             </span>
