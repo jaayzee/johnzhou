@@ -3,15 +3,24 @@ import { NextResponse } from 'next/server';
 // holy moly a few days after I pushed to live on Dec 4, 2024, Meta deprecated Instagram Basic Display API
 // switched over to Instagram Graph API today
 
-// refresh token regularly
-async function refreshToken(token: string) {
-  const response = await fetch(
-    `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
-  );
-  if (!response.ok) {
-    throw new Error('Failed to refresh token');
+// Cache duration: 1 hour
+const CACHE_DURATION = 3600;
+
+async function refreshToken(token: string): Promise<boolean> {
+  try {
+    const response = await fetch(
+      `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`,
+      { next: { revalidate: CACHE_DURATION } }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to refresh token');
+    }
+    return true;
+  } catch (error) {
+    console.error('Token refresh failed:', error);
+    return false;
   }
-  return true;
 }
 
 export async function GET() {
@@ -21,12 +30,27 @@ export async function GET() {
       throw new Error('Instagram access token not found');
     }
 
+    // Try to refresh the token
     await refreshToken(token);
 
+    // Fetch posts
     const response = await fetch(
-      `https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink&access_token=${token}`
+      `https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink&access_token=${token}`,
+      { next: { revalidate: CACHE_DURATION } }
     );
-    return NextResponse.json(await response.json());
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch posts');
+    }
+
+    const data = await response.json();
+
+    // Return response with cache headers
+    return NextResponse.json(data, {
+      headers: {
+        'Cache-Control': `public, s-maxage=${CACHE_DURATION}, stale-while-revalidate`,
+      },
+    });
   } catch (error) {
     console.error('Instagram API error:', error);
     return NextResponse.json(

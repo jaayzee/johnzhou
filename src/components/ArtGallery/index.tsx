@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { Instagram, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -11,102 +11,66 @@ interface Post {
   media_url: string;
   caption?: string;
   permalink: string;
-  width?: number;
-  height?: number;
 }
 
 export default function ArtGallery() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const shimmerRef = useRef<HTMLDivElement>(null);
 
   const removeHashtags = (caption: string) => {
     if (!caption) return '';
-    return caption.split('\n')[0].substring(0, caption.split('\n')[0].length);
+    return caption.split('\n')[0].trim();
   };
 
   useEffect(() => {
     fetch('/api/instagram')
       .then((res) => res.json())
-      .then(async (data) => {
-        const postsWithDimensions = await Promise.all(
-          data.data.map(async (post: Post) => {
-            return new Promise<Post>((resolve) => {
-              const imgLoader = document.createElement('img');
-              imgLoader.src = post.media_url;
-              imgLoader.onload = () => {
-                resolve({
-                  ...post,
-                  caption: post.caption
-                    ? removeHashtags(post.caption)
-                    : undefined,
-                  width: imgLoader.width,
-                  height: imgLoader.height,
-                });
-              };
-              imgLoader.onerror = () => {
-                resolve(post);
-              };
-            });
-          })
-        );
-        setPosts(postsWithDimensions);
-        setLoading(false);
+      .then((data) => {
+        if (data.error) throw new Error(data.error);
+        const processedPosts = data.data.map((post: Post) => ({
+          ...post,
+          caption: post.caption ? removeHashtags(post.caption) : undefined,
+        }));
+        setPosts(processedPosts);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.error('Failed to fetch posts:', err);
+        setError('Unable to load artwork at this time');
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (selectedPost && shimmerRef.current) {
-      shimmerRef.current.style.background = `
-            linear-gradient(
-              125deg,
-              rgba(255, 255, 255, 0) 0%,
-              rgba(255, 255, 255, 0.05) 25%,
-              rgba(255, 255, 255, 0.1) 45%,
-              rgba(255, 255, 255, 0.2) 50%,
-              rgba(255, 255, 255, 0.1) 55%,
-              rgba(255, 255, 255, 0.05) 75%,
-              rgba(255, 255, 255, 0) 100%
-            )
-          `;
-    }
-  }, [selectedPost]);
-
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (!selectedPost) return;
     const currentIndex = posts.findIndex((post) => post.id === selectedPost.id);
     const previousIndex = (currentIndex - 1 + posts.length) % posts.length;
     setSelectedPost(posts[previousIndex]);
-  };
+  }, [selectedPost, posts]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (!selectedPost) return;
     const currentIndex = posts.findIndex((post) => post.id === selectedPost.id);
     const nextIndex = (currentIndex + 1) % posts.length;
     setSelectedPost(posts[nextIndex]);
-  };
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') handlePrevious();
-    if (e.key === 'ArrowRight') handleNext();
-    if (e.key === 'Escape') setSelectedPost(null);
-  };
+  }, [selectedPost, posts]);
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') handlePrevious();
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'Escape') setSelectedPost(null);
+    };
+
     if (selectedPost) {
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [selectedPost]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedPost, handleNext, handlePrevious]);
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
-  // tilt effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!imageRef.current || !shimmerRef.current) return;
 
@@ -114,37 +78,51 @@ export default function ArtGallery() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const xPercent = ((x / rect.width) * 100 - 50) * 0.8;
-    const yPercent = ((y / rect.height) * 100 - 50) * 0.8;
+    const xPercent = ((x / rect.width) * 100 - 50) * 0.5;
+    const yPercent = ((y / rect.height) * 100 - 50) * 0.5;
 
-    // apply tilt
     imageRef.current.style.transform = `perspective(1000px) rotateY(${xPercent * 0.1}deg) rotateX(${-yPercent * 0.1}deg)`;
 
-    // update shimmer
     shimmerRef.current.style.background = `
-          linear-gradient(
-            ${125 + xPercent * 0.5}deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.05) 25%,
-            rgba(255, 255, 255, ${0.1 + Math.abs(xPercent) * 0.002}) 45%,
-            rgba(255, 255, 255, ${0.2 + Math.abs(yPercent) * 0.003}) 50%,
-            rgba(255, 255, 255, ${0.1 + Math.abs(xPercent) * 0.002}) 55%,
-            rgba(255, 255, 255, 0.05) 75%,
-            rgba(255, 255, 255, 0) 100%
-          )
-        `;
+      linear-gradient(
+        ${125 + xPercent * 0.5}deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, ${0.1 + Math.abs(xPercent) * 0.002}) 45%,
+        rgba(255, 255, 255, ${0.2 + Math.abs(yPercent) * 0.003}) 50%,
+        rgba(255, 255, 255, ${0.1 + Math.abs(xPercent) * 0.002}) 55%,
+        rgba(255, 255, 255, 0.05) 75%,
+        rgba(255, 255, 255, 0) 100%
+      )
+    `;
   };
 
   const handleMouseLeave = () => {
     if (!imageRef.current) return;
     imageRef.current.style.transform =
-      'perspective(800px) rotateY(0deg) rotateX(0deg)';
+      'perspective(1000px) rotateY(0deg) rotateX(0deg)';
   };
+
+  if (loading) return <LoadingSpinner />;
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-3xl font-theme mb-8">Artwork ✦</h1>
+        <p className="text-lg">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <>
-      {/* Mason Wall Gallery */}
-      <div className="container mx-auto px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto px-4 py-8"
+      >
         <h1 className="text-3xl font-theme mb-8 ml-8">Artwork ✦</h1>
         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
           {posts.map((post) => (
@@ -160,33 +138,29 @@ export default function ArtGallery() {
               <div className="relative rounded-lg overflow-hidden">
                 <Image
                   src={post.media_url}
-                  alt={
-                    post.caption
-                      ? removeHashtags(post.caption)
-                      : 'Instagram post'
-                  }
+                  alt={post.caption || 'Instagram post'}
                   width={500}
                   height={500}
-                  draggable={false}
                   className="w-full h-auto transition-all duration-300 
-                            filter grayscale-[30%] contrast-[95%] 
-                            group-hover:grayscale-0 group-hover:contrast-100 
-                            group-hover:scale-105"
-                  priority={false}
+                    filter grayscale-[50%] contrast-[90%] 
+                    group-hover:grayscale-0 group-hover:contrast-100 
+                    group-hover:scale-105"
+                  unoptimized // weird interaction with instafram blocking <Image> optimizations
                 />
               </div>
             </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Modal */}
       {selectedPost && (
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
           onClick={() => setSelectedPost(null)}
         >
-          {/* Image Controls */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -226,17 +200,11 @@ export default function ArtGallery() {
             <Instagram className="w-6 h-6" />
           </a>
 
-          {/* Content Container */}
           <div
             className="max-w-[90vw] max-h-[90vh] flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Image Container with Tilt and Shimmer */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+            <div
               ref={imageRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
@@ -248,19 +216,15 @@ export default function ArtGallery() {
                 alt={selectedPost.caption || 'Instagram post'}
                 width={1200}
                 height={1200}
-                draggable={false}
                 className="object-contain max-h-[70vh] w-auto mx-auto rounded-lg"
+                unoptimized
                 priority
               />
-              {/* Shimmer Overlay */}
               <div
                 ref={shimmerRef}
                 className="absolute inset-0 rounded-lg pointer-events-none transition-all duration-200"
-                style={{
-                  mixBlendMode: 'overlay',
-                }}
+                style={{ mixBlendMode: 'overlay' }}
               />
-              {/* Additional Glossy Overlay */}
               <div
                 className="absolute inset-0 rounded-lg pointer-events-none"
                 style={{
@@ -269,18 +233,19 @@ export default function ArtGallery() {
                   mixBlendMode: 'overlay',
                 }}
               />
-            </motion.div>
+            </div>
 
-            {/* Caption */}
             {selectedPost.caption && (
-              <div className="w-full p-2 font-bold text-white text-2xl rounded mt-4">
-                <p className="text-center">
-                  {removeHashtags(selectedPost.caption)}
-                </p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="w-full p-2 font-bold text-white text-2xl rounded mt-4"
+              >
+                <p className="text-center">{selectedPost.caption}</p>
+              </motion.div>
             )}
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

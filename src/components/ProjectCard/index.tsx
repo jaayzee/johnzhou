@@ -1,9 +1,10 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Globe, Link as LinkIcon } from 'lucide-react';
-import Plyr from 'plyr-react';
+const Plyr = dynamic(() => import('plyr-react'), { ssr: false });
 import 'plyr-react/plyr.css';
 import ErrorBoundary from './ErrorBoundary';
 import Image from 'next/image';

@@ -3,14 +3,8 @@
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { CheckCircle2, XCircle, Loader2 } from 'lucide-react';
-import dynamic from 'next/dynamic';
-
-const SmoothScroll = dynamic(
-  () => import('@/components/Parallax/SmoothScroll'),
-  {
-    ssr: false,
-  }
-);
+import { motion } from 'framer-motion';
+import SmoothScroll from '@/components/Parallax/SmoothScroll';
 
 interface FormData {
   email: string;
@@ -102,7 +96,13 @@ const Contact: FC = () => {
   return (
     <SmoothScroll>
       <main className="h-screen bg-background pt-16">
-        <div className="container mx-auto px-4 py-16 h-full flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="container mx-auto px-4 py-16 h-full flex flex-col items-center"
+        >
           <div className="pt-10 bg-foreground-transparent rounded-3xl shadow-[0_10px_15px_rgba(0,0,0,0.5)] h-fit">
             <h1 className="text-4xl px-20 text-center font-theme mb-12 text-foreground">
               Reach Me
@@ -253,7 +253,7 @@ const Contact: FC = () => {
               </div>
             </form>
           </div>
-        </div>
+        </motion.div>
       </main>
     </SmoothScroll>
   );

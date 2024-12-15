@@ -1,19 +1,21 @@
-import dynamic from 'next/dynamic';
-import { ProjectCard } from '@/components/ProjectCard';
-import ProgressBar from '@/components/ProgressBar';
-import data from './projects.json';
+'use client';
 
-const SmoothScroll = dynamic(
-  () => import('@/components/Parallax/SmoothScroll'),
-  {
-    ssr: false,
-  }
-);
+import { ProjectCard } from '@/components/ProjectCard';
+import data from './projects.json';
+import { motion } from 'framer-motion';
+import SmoothScroll from '@/components/Parallax/SmoothScroll';
+import ProgressBar from '@/components/ProgressBar';
 
 export default function Work() {
   return (
     <main className="min-h-screen bg-background pt-16">
-      <div className="container mx-auto px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto px-4 py-8"
+      >
         <div className="lg:hidden mb-8">
           <h1 className="text-3xl font-theme text-foreground">Work ✦</h1>
         </div>
@@ -38,7 +40,7 @@ export default function Work() {
             </SmoothScroll>
           </div>
         </div>
-      </div>
+      </motion.div>
     </main>
   );
 }

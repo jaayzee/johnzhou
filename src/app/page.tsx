@@ -1,3 +1,5 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 import Marquee from 'react-fast-marquee';
 import {
@@ -6,6 +8,9 @@ import {
   ChevronRight,
   ChevronDown,
 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import PolaroidScene from '@/components/PolaroidScene/index';
+import OverlayCards from '@/components/OverlayCards';
 
 const Scene = dynamic(() => import('@/components/Scene/index'), {
   ssr: false,
@@ -14,13 +19,6 @@ const Scene = dynamic(() => import('@/components/Scene/index'), {
 const SpaceScene = dynamic(() => import('@/components/SpaceScene/index'), {
   ssr: false,
 });
-
-const PolaroidScene = dynamic(
-  () => import('@/components/PolaroidScene/index'),
-  {
-    ssr: false,
-  }
-);
 
 const ParallaxWrapper = dynamic(
   () => import('@/components/Parallax/ParallaxWrapper'),
@@ -35,10 +33,6 @@ const ParallaxSection = dynamic(
     ssr: false,
   }
 );
-
-const OverlayCards = dynamic(() => import('@/components/OverlayCards'), {
-  ssr: false,
-});
 
 const date = new Date();
 const time = date.getHours();
@@ -117,10 +111,12 @@ export default function Home() {
   return (
     <main>
       {/* Main Scene */}
-      <ParallaxWrapper>
-        <Scene />
-        <ChevronDown className="text-foreground w-12 h-12 absolute bottom-8 left-1/2 -translate-x-1/2 -ml-6 animate-bounce" />
-      </ParallaxWrapper>
+      <div className="h-screen w-full relative">
+        <ParallaxWrapper>
+          <Scene />
+          <ChevronDown className="text-foreground w-12 h-12 absolute bottom-8 left-1/2 -translate-x-1/2 -ml-6 animate-bounce" />
+        </ParallaxWrapper>
+      </div>
 
       {/* Content */}
       <div className="w-full bg-background">
@@ -131,9 +127,14 @@ export default function Home() {
               ✦ 周 加 强&nbsp;
             </span>
           </Marquee>
-          <div className="flex-1 px-8 flex flex-col justify-evenly">
-            <div>
-              <h2 className="text-center text-4xl font-bold">
+          <div className="flex-1 px-8 py-8 flex flex-col justify-evenly">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <h2 className="text-center text-2xl xs:text-4xl font-bold">
                 Good
                 {time >= 12 ? (
                   time >= 16 ? (
@@ -170,44 +171,68 @@ export default function Home() {
                 )}
                 !
               </h2>
-              <h3 className="flex justify-center text-dim text-lg font-semibold">
+              <h3 className="flex justify-center text-dim text-sm xs:text-lg font-semibold">
                 I&apos;m John, and I&apos;m a(n) ...
               </h3>
-            </div>
-            <div className="flex justify-center min-h-[30rem]">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="flex justify-center min-h-[30rem]"
+            >
               <OverlayCards
                 leftChild={<DevCard />}
                 rightChild={<ArtistCard />}
               />
-            </div>
-            <div className="flex justify-center">
-              <p className="text-dim leading-relaxed max-w-2xl text-center mt-9 mb-8 xs:mt-0">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="flex justify-center"
+            >
+              <p className="text-dim xs:text-lg text-sm leading-relaxed max-w-2xl text-center mt-24 mb-8 xs:mt-0">
                 I&apos;m currently pursuing my BS in{' '}
                 <strong>Mathematics|Computer Science</strong> at the{' '}
                 <strong>University of California, San Diego</strong>, and will
                 be graduating March of 2025 with a minor in{' '}
                 <strong>Engineering Mechanics</strong>.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* Star Field */}
-        <div>
+        <div className="touch-auto">
           <ParallaxSection scene={<SpaceScene />}>
             <div className="select-none relative z-10 w-full h-full flex flex-col justify-between pointer-events-none">
-              <div className="ml-auto bg-background-transparent backdrop-blur-sm my-5 pl-5 pr-10 py-5 rounded-l-xl">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="ml-auto bg-background-transparent backdrop-blur-sm my-5 pl-5 pr-10 py-5 rounded-l-xl pointer-events"
+              >
                 <p className="flex space-x-4 text-foreground">
                   <ChevronLeft />
                   <MousePointerClick />
                   <ChevronRight />
                 </p>
-              </div>
-              <div className="mr-auto bg-background-transparent backdrop-blur-sm my-5 px-20 py-10 rounded-r-xl">
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="mr-auto bg-background-transparent backdrop-blur-sm my-5 px-20 py-10 rounded-r-xl"
+              >
                 <p className="font-theme text-foreground text-[4vh]">
                   Snapshots
                 </p>
-              </div>
+              </motion.div>
             </div>
           </ParallaxSection>
         </div>

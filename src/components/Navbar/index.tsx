@@ -6,12 +6,53 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import LogoSharp from '../../../public/medias/LogoSharp';
 import LogoGoop from '../../../public/medias/LogoGoop';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { resolvedTheme } = useTheme();
+
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      height: 0,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+        when: 'afterChildren',
+      },
+    },
+    open: {
+      opacity: 1,
+      height: '100vh',
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    closed: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.2,
+        ease: 'easeIn',
+      },
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.2,
+        ease: 'easeOut',
+      },
+    },
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -93,26 +134,39 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 h-screen space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                    isActive(item.href)
-                      ? 'text-background bg-foreground'
-                      : 'text-foreground hover:text-background hover:bg-destructive'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="md:hidden"
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={menuVariants}
+            >
+              <div className="px-2 pt-2 pb-3 h-screen space-y-1">
+                {navItems.map((item) => (
+                  <motion.div
+                    key={item.label}
+                    variants={itemVariants}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className={`text-center block px-3 py-2 rounded-md font-bold transition-colors ${
+                        isActive(item.href)
+                          ? 'text-background bg-foreground'
+                          : 'text-foreground hover:text-background hover:bg-destructive'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

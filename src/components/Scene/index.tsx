@@ -6,23 +6,22 @@ import Model from './Model';
 import { Environment } from '@react-three/drei';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import LoadingSpinner from '../LoadingSpinner';
+import { motion } from 'framer-motion';
 
 const SceneContent = memo(function SceneContent() {
   return (
-    <Suspense fallback={null}>
+    <>
       <Model />
       <directionalLight intensity={2} position={[0, 2, 3]} />
       <Environment preset="city" />
-    </Suspense>
+    </>
   );
 });
 
 function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
   useEffect(() => {
-    // attempt to reset after 1 seconds
     const timer = setTimeout(() => {
       resetErrorBoundary();
-      // if reset doesn't work, force a page reload
       if (error) {
         window.location.reload();
       }
@@ -31,31 +30,49 @@ function FallbackComponent({ error, resetErrorBoundary }: FallbackProps) {
     return () => clearTimeout(timer);
   }, [error, resetErrorBoundary]);
 
-  return <LoadingSpinner />;
+  return (
+    <div className="absolute inset-0 flex items-center justify-center bg-background">
+      <LoadingSpinner />
+    </div>
+  );
 }
 
 function Scene() {
   return (
-    <div className="relative w-full h-full">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="relative w-full h-full"
+    >
       <ErrorBoundary
         FallbackComponent={FallbackComponent}
         onReset={() => {
-          // reset state
           console.log('Error boundary reset');
         }}
         onError={(error) => {
           console.error('Scene Error:', error);
         }}
       >
-        <Canvas
-          style={{ background: 'var(--background)' }}
-          performance={{ min: 0.5 }}
-          dpr={[1, 2]}
+        <Suspense
+          fallback={
+            <div className="absolute inset-0 flex items-center justify-center bg-background">
+              <LoadingSpinner />
+            </div>
+          }
         >
-          <SceneContent />
-        </Canvas>
+          <Canvas
+            style={{ background: 'var(--background)' }}
+            performance={{ min: 0.5 }}
+            dpr={[1, 2]}
+            className="absolute inset-0"
+          >
+            <SceneContent />
+          </Canvas>
+        </Suspense>
       </ErrorBoundary>
-    </div>
+    </motion.div>
   );
 }
 
