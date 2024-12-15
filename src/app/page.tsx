@@ -197,7 +197,7 @@ export default function Home() {
               transition={{ duration: 1 }}
               className="flex justify-center"
             >
-              <p className="text-dim xs:text-lg text-sm leading-relaxed max-w-2xl text-center mt-24 mb-8 xs:mt-0">
+              <p className="text-dim xs:text-lg text-sm leading-relaxed max-w-2xl text-center mt-20 mb-8 xs:mt-0">
                 I&apos;m currently pursuing my BS in{' '}
                 <strong>Mathematics|Computer Science</strong> at the{' '}
                 <strong>University of California, San Diego</strong>, and will
