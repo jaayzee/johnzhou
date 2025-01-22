@@ -1,5 +1,18 @@
 [
   {
+    "name": "HackXR 2025",
+    "link": "https://hackxr2025.vercel.app/",
+    "desc": "Designed and implemented the HackXR landing site for Triton Extended Reality's 2025 Hackathon.",
+    "video": "",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "TailwindCSS",
+      "Airbase API",
+      "Figma"
+    ]
+  },
+  {
     "name": "Eki",
     "link": "https://devpost.com/software/eki",
     "desc": "Made a fun little stamping app for CalHacks 2024.",

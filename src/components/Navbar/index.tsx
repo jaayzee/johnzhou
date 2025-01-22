@@ -59,7 +59,7 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { label: 'Home', href: '/' },
+    { label: 'Info', href: '#Info' },
     { label: 'Work', href: '/work' },
     { label: 'Art', href: '/art' },
     { label: 'Resume', href: '/resume' },
