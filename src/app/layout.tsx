@@ -21,16 +21,7 @@ export const metadata: Metadata = {
   title: 'J O Z O',
   description: 'Come take a look ( ˘ ³˘)♥︎',
   icons: {
-    icon: [
-      {
-        url: '/medias/favicon-dark.ico',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/medias/favicon-light.ico',
-        media: '(prefers-color-scheme: dark)',
-      },
-    ],
+    icon: '/medias/favicon-light.ico',
   },
 };
 
