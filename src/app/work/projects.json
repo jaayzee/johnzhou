@@ -1,5 +1,18 @@
 [
   {
+    "name": "LEER",
+    "link": "https://vrchat.com/home/launch?worldId=wrld_15a80448-4c88-40a4-aa9a-460e8e9f22ee",
+    "desc": "Directed and worked on a VR horror game with the \"Weeping Angel\" effect in VR. Had LOTS of fun modelling, rigging, texturing, and animating the monster, and it was super fun determining the monsters behavior and playing with the VR viewport and horror elements.",
+    "video": "",
+    "stack": [
+      "Unity",
+      "C# / Udon#",
+      "Blender",
+      "Mocopi Motion Capture",
+      "VRChat SDK"
+    ]
+  },
+  {
     "name": "HackXR 2025",
     "link": "https://hackxr.io/",
     "desc": "Designed and implemented the HackXR landing site for Triton Extended Reality's 2025 Hackathon.",
