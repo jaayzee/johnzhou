@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Globe, Link as LinkIcon } from 'lucide-react';
-const Plyr = dynamic(() => import('plyr-react'), { ssr: false });
+const Plyr = dynamic(() => import('plyr-react'), { ssr: false }); // culprit of many ssr issues
 import 'plyr-react/plyr.css';
 import ErrorBoundary from './ErrorBoundary';
 import Image from 'next/image';

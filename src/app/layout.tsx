@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from 'next-themes';
 import ThemeSwitcher from '@/components/DarkModeSwitch/ThemeSwitcher';
+import Grain from '@/components/Grain';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -36,6 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class">
+          <Grain />
           <ThemeSwitcher />
           <Navbar />
           {children}
