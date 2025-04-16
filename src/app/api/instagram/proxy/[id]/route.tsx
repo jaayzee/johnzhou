@@ -3,13 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 // Cache duration: 1 week (in seconds)
 const CACHE_DURATION = 60 * 60 * 24 * 7;
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
-    const id = params.id;
-
     // Get the original Instagram URL from the query parameter
     const url = request.nextUrl.searchParams.get('url');
 
