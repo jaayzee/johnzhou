@@ -200,7 +200,7 @@ export const VideoCard = ({ project }: { project: Project }) => {
 
 export const ProjectCard = ({ project }: { project: Project }) => (
   <motion.div
-    className="mb-16 bg-foreground-transparent rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.5)]"
+    className="mb-16 bg-foreground-transparent rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.5)] w-full"
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
@@ -213,25 +213,25 @@ export const ProjectCard = ({ project }: { project: Project }) => (
       <Title name={project.name} link={project.link} />
     </div>
 
-    <div className="flex gap-4 px-6 pb-10">
+    <div className="flex gap-4 px-6 pb-10 w-full">
       <div
-        className={`${project.video ? 'lg:hidden' : ''} w-3 mx-4 rounded-b-2xl bg-background-transparent`}
+        className={`${project.video ? 'lg:hidden' : ''} w-3 mx-4 rounded-b-2xl bg-background-transparent flex-shrink-0`}
       />
-      <div className="flex-1">
-        <div className="flex flex-col lg:flex-row lg:gap-6 pt-6">
+      <div className="flex-1 min-w-0 overflow-hidden">
+        <div className="flex flex-col lg:flex-row lg:gap-6 pt-6 w-full">
           {project.video ? (
             <>
               <ErrorBoundary>
                 <VideoCard project={project} />
               </ErrorBoundary>
-              <ContentBlock className="lg:hidden pt-4">
+              <ContentBlock className="lg:hidden pt-4 w-full">
                 <p className="text-dim">{project.desc}</p>
                 {project.quote && <QuoteBlock quote={project.quote} />}
                 {project.stack && <TechStack stack={project.stack} />}
               </ContentBlock>
             </>
           ) : (
-            <ContentBlock className="w-full">
+            <ContentBlock className="w-full min-w-0 overflow-hidden">
               <p className="text-dim">{project.desc}</p>
               {project.quote && <QuoteBlock quote={project.quote} />}
               {project.stack && <TechStack stack={project.stack} />}

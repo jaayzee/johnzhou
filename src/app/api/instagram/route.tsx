@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { InstagramResponse, InstagramMedia } from '@/types/instagram';
 
 // holy moly a few days after I pushed to live on Dec 4, 2024, Meta deprecated Instagram Basic Display API
 // switched over to Instagram Graph API today
@@ -23,6 +24,23 @@ async function refreshToken(token: string): Promise<boolean> {
   }
 }
 
+// Transform Instagram media URLs to use our proxy
+function transformMediaUrls(posts: InstagramMedia[]): InstagramMedia[] {
+  return posts.map((post) => {
+    if (post.media_url) {
+      // Create a URL-safe version of the original media URL
+      const encodedUrl = encodeURIComponent(post.media_url);
+
+      // Replace the direct Instagram URL with our proxy URL
+      return {
+        ...post,
+        media_url: `/api/instagram/proxy/${post.id}?url=${encodedUrl}`,
+      };
+    }
+    return post;
+  });
+}
+
 export async function GET() {
   try {
     const token = process.env.INSTAGRAM_ACCESS_TOKEN;
@@ -43,7 +61,12 @@ export async function GET() {
       throw new Error('Failed to fetch posts');
     }
 
-    const data = await response.json();
+    const data: InstagramResponse = await response.json();
+
+    // Transform media URLs to use our proxy
+    if (data.data) {
+      data.data = transformMediaUrls(data.data);
+    }
 
     // Return response with cache headers
     return NextResponse.json(data, {

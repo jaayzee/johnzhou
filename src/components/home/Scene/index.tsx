@@ -5,7 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import Model from './Model';
 import { Environment } from '@react-three/drei';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../../LoadingSpinner';
 import { motion } from 'framer-motion';
 
 const SceneContent = memo(function SceneContent() {

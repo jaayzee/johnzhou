@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { Instagram, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface Post {
   id: string;
@@ -145,7 +145,7 @@ export default function ArtGallery() {
                     filter grayscale-[50%] contrast-[90%] 
                     group-hover:grayscale-0 group-hover:contrast-100 
                     group-hover:scale-105"
-                  unoptimized // weird interaction with instafram blocking <Image> optimizations
+                  priority
                 />
               </div>
             </motion.div>
@@ -217,7 +217,6 @@ export default function ArtGallery() {
                 width={1200}
                 height={1200}
                 className="object-contain max-h-[70vh] w-auto mx-auto rounded-lg"
-                unoptimized
                 priority
               />
               <div

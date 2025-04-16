@@ -1,4 +1,4 @@
-import ArtGallery from '@/components/ArtGallery';
+import ArtGallery from './components/ArtGallery';
 import SmoothScroll from '@/components/Parallax/SmoothScroll';
 
 export default function ArtPage() {

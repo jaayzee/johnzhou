@@ -9,14 +9,14 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import PolaroidScene from '@/components/PolaroidScene/index';
-import OverlayCards from '@/components/OverlayCards';
+import PolaroidScene from '@/components/home/PolaroidScene/index';
+import OverlayCards from '@/components/home/OverlayCards';
 
-const Scene = dynamic(() => import('@/components/Scene/index'), {
+const Scene = dynamic(() => import('@/components/home/Scene/index'), {
   ssr: false,
 });
 
-const SpaceScene = dynamic(() => import('@/components/SpaceScene/index'), {
+const SpaceScene = dynamic(() => import('@/components/home/SpaceScene/index'), {
   ssr: false,
 });
 

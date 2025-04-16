@@ -1,10 +1,10 @@
 'use client';
 
-import { ProjectCard } from '@/components/ProjectCard';
+import { ProjectCard } from './components/ProjectCard';
 import data from './projects.json';
 import { motion } from 'framer-motion';
 import SmoothScroll from '@/components/Parallax/SmoothScroll';
-import ProgressBar from '@/components/ProgressBar';
+import ProgressBar from './components/ProgressBar';
 
 export default function Work() {
   return (
